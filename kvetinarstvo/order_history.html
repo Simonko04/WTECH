@@ -23,18 +23,6 @@
       background-color: #e9ecef;
     }
 
-    /* Objednávka riadok */
-    .order-item {
-      transition: background-color 0.2s;
-      border-bottom: 1px solid #dee2e6;
-    }
-    .order-item:last-child {
-      border-bottom: none;
-    }
-    .order-item:hover {
-      background-color: #f8f9fa;
-    }
-
     /* Stav objednávky - farebné odznaky */
     .badge-delivered  { background-color: #d1e7dd; color: #0a3622; }
     .badge-pending    { background-color: #fff3cd; color: #664d03; }
@@ -64,6 +52,11 @@
       outline: none;
       border-color: var(--primary-accent);
       box-shadow: 0 0 0 0.2rem rgba(214, 51, 132, 0.15);
+    }
+
+    /* Hover pre riadky tabuľky */
+    .table-hover tbody tr:hover {
+      background-color: #f8f9fa;
     }
   </style>
 </head>
@@ -115,38 +108,30 @@
   <!-- Breadcrumb -->
   <nav aria-label="breadcrumb" class="mb-4">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item">
-        <a href="#" class="text-decoration-none text-muted">Home</a>
-      </li>
-      <li class="breadcrumb-item">
-        <a href="#" class="text-decoration-none text-muted">Profile</a>
-      </li>
-      <li class="breadcrumb-item active text-muted" aria-current="page">Order history</li>
+      <li class="breadcrumb-item"><a href="#" class="text-decoration-none text-muted">Domov</a></li>
+      <li class="breadcrumb-item"><a href="#" class="text-decoration-none text-muted">Profil</a></li>
+      <li class="breadcrumb-item active text-muted" aria-current="page">História objednávok</li>
     </ol>
   </nav>
 
-  <section aria-label="História objednávok">
+  <h1 class="h3 mb-4">História objednávok</h1>
+
+  <section aria-label="Zoznam objednávok s filtrom">
 
     <!-- Filter lišta -->
-    <div class="filter-bar rounded shadow-sm px-4 py-3 mb-3">
+    <div class="filter-bar rounded shadow-sm px-4 py-3 mb-4">
       <form class="row g-3 align-items-end" aria-label="Filtre objednávok">
 
         <!-- Dátum od -->
         <div class="col-6 col-sm-4 col-md-2">
           <label for="date-from" class="form-label small text-muted mb-1">Dátum od</label>
-          <input type="date"
-                 id="date-from"
-                 class="filter-input w-100"
-                 value="2025-01-01">
+          <input type="date" id="date-from" class="filter-input w-100" value="2024-01-01">
         </div>
 
         <!-- Dátum do -->
         <div class="col-6 col-sm-4 col-md-2">
           <label for="date-to" class="form-label small text-muted mb-1">Dátum do</label>
-          <input type="date"
-                 id="date-to"
-                 class="filter-input w-100"
-                 value="2026-03-20">
+          <input type="date" id="date-to" class="filter-input w-100" value="2026-03-27">
         </div>
 
         <!-- Stav objednávky -->
@@ -172,10 +157,9 @@
           </select>
         </div>
 
-        <!-- Tlačidlo filtrovať -->
+        <!-- Tlačidlo filtrovať (Zmenené w-100 len pre mobily) -->
         <div class="col-12 col-md-2">
-          <button type="submit"
-                  class="btn-detail bg-secondary bg-opacity-25 border-0 px-4 py-2 rounded shadow-sm text-dark small w-100">
+          <button type="submit" class="btn-detail bg-secondary bg-opacity-25 border-0 px-4 py-2 rounded shadow-sm text-dark small w-100">
             Filtrovať
           </button>
         </div>
@@ -183,158 +167,97 @@
       </form>
     </div>
 
-    <!-- Zoznam objednávok -->
+    <!-- HTML Tabuľka objednávok -->
     <div class="bg-light rounded shadow-sm overflow-hidden">
-      <ul class="list-unstyled m-0">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0" style="--bs-table-bg: transparent;">
 
-        <!-- Hlavička tabuľky -->
-        <li class="bg-secondary bg-opacity-25 px-4 py-2 d-none d-md-block">
-          <div class="row small fw-medium text-muted">
-            <div class="col-md-2">Číslo obj.</div>
-            <div class="col-md-2">Dátum</div>
-            <div class="col-md-4">Položky</div>
-            <div class="col-md-2">Suma</div>
-            <div class="col-md-1">Stav</div>
-            <div class="col-md-1"></div>
-          </div>
-        </li>
+          <thead class="bg-secondary bg-opacity-25 text-muted small">
+          <tr>
+            <th scope="col" class="px-4 py-3 fw-medium border-0">Číslo obj.</th>
+            <th scope="col" class="py-3 fw-medium border-0">Dátum</th>
+            <th scope="col" class="py-3 fw-medium border-0" style="min-width: 250px;">Položky</th>
+            <th scope="col" class="py-3 fw-medium border-0">Suma</th>
+            <th scope="col" class="py-3 fw-medium border-0">Stav</th>
+            <th scope="col" class="px-4 py-3 fw-medium border-0 text-end">Akcia</th>
+          </tr>
+          </thead>
 
-        <!-- Objednávka 1 -->
-        <li class="order-item px-4 py-3">
-          <div class="row align-items-center g-2">
-            <div class="col-12 col-md-2">
-              <span class="small fw-medium text-dark">#20250312</span>
-            </div>
-            <div class="col-6 col-md-2">
-              <time datetime="2025-03-12" class="small text-muted">12.03.2025</time>
-            </div>
-            <div class="col-12 col-md-4">
-              <span class="small text-dark">Ruža červená, Orchidea fialová</span>
-            </div>
-            <div class="col-6 col-md-2">
-              <span class="small fw-medium text-dark">19.99€</span>
-            </div>
-            <div class="col-6 col-md-1">
-              <span class="badge-delivered px-2 py-1 rounded small">Doručená</span>
-            </div>
-            <div class="col-6 col-md-1 text-end">
-              <a href="#"
-                 class="btn-detail bg-secondary bg-opacity-25 border-0 px-3 py-1 rounded shadow-sm text-dark small text-decoration-none">
+          <tbody class="border-top-0">
+
+          <!-- Objednávka 1 -->
+          <tr>
+            <td class="px-4 py-3"><span class="small fw-medium text-dark">#20260312</span></td>
+            <td class="py-3"><time datetime="2026-03-12" class="small text-muted">12.03.2026</time></td>
+            <td class="py-3"><span class="small text-dark">Ruža červená, Orchidea fialová</span></td>
+            <td class="py-3"><span class="small fw-medium text-dark">19.99€</span></td>
+            <td class="py-3"><span class="badge-delivered px-2 py-1 rounded small">Doručená</span></td>
+            <td class="px-4 py-3 text-end">
+              <a href="#" class="btn-detail bg-secondary bg-opacity-25 border-0 px-3 py-1 rounded shadow-sm text-dark small text-decoration-none">
                 Detail
               </a>
-            </div>
-          </div>
-        </li>
+            </td>
+          </tr>
 
-        <!-- Objednávka 2 -->
-        <li class="order-item px-4 py-3">
-          <div class="row align-items-center g-2">
-            <div class="col-12 col-md-2">
-              <span class="small fw-medium text-dark">#20250205</span>
-            </div>
-            <div class="col-6 col-md-2">
-              <time datetime="2025-02-05" class="small text-muted">05.02.2025</time>
-            </div>
-            <div class="col-12 col-md-4">
-              <span class="small text-dark">Karafiát biely – kytica</span>
-            </div>
-            <div class="col-6 col-md-2">
-              <span class="small fw-medium text-dark">8.90€</span>
-            </div>
-            <div class="col-6 col-md-1">
-              <span class="badge-delivered px-2 py-1 rounded small">Doručená</span>
-            </div>
-            <div class="col-6 col-md-1 text-end">
-              <a href="#"
-                 class="btn-detail bg-secondary bg-opacity-25 border-0 px-3 py-1 rounded shadow-sm text-dark small text-decoration-none">
+          <!-- Objednávka 2 -->
+          <tr>
+            <td class="px-4 py-3"><span class="small fw-medium text-dark">#20260205</span></td>
+            <td class="py-3"><time datetime="2026-02-05" class="small text-muted">05.02.2026</time></td>
+            <td class="py-3"><span class="small text-dark">Karafiát biely – kytica</span></td>
+            <td class="py-3"><span class="small fw-medium text-dark">8.90€</span></td>
+            <td class="py-3"><span class="badge-delivered px-2 py-1 rounded small">Doručená</span></td>
+            <td class="px-4 py-3 text-end">
+              <a href="#" class="btn-detail bg-secondary bg-opacity-25 border-0 px-3 py-1 rounded shadow-sm text-dark small text-decoration-none">
                 Detail
               </a>
-            </div>
-          </div>
-        </li>
+            </td>
+          </tr>
 
-        <!-- Objednávka 3 -->
-        <li class="order-item px-4 py-3">
-          <div class="row align-items-center g-2">
-            <div class="col-12 col-md-2">
-              <span class="small fw-medium text-dark">#20260115</span>
-            </div>
-            <div class="col-6 col-md-2">
-              <time datetime="2026-01-15" class="small text-muted">15.01.2026</time>
-            </div>
-            <div class="col-12 col-md-4">
-              <span class="small text-dark">Slnečnica žltá, Tulipán ružový</span>
-            </div>
-            <div class="col-6 col-md-2">
-              <span class="small fw-medium text-dark">12.40€</span>
-            </div>
-            <div class="col-6 col-md-1">
-              <span class="badge-processing px-2 py-1 rounded small">Spracováva sa</span>
-            </div>
-            <div class="col-6 col-md-1 text-end">
-              <a href="#"
-                 class="btn-detail bg-secondary bg-opacity-25 border-0 px-3 py-1 rounded shadow-sm text-dark small text-decoration-none">
+          <!-- Objednávka 3 -->
+          <tr>
+            <td class="px-4 py-3"><span class="small fw-medium text-dark">#20260115</span></td>
+            <td class="py-3"><time datetime="2026-01-15" class="small text-muted">15.01.2026</time></td>
+            <td class="py-3"><span class="small text-dark">Slnečnica žltá, Tulipán ružový</span></td>
+            <td class="py-3"><span class="small fw-medium text-dark">12.40€</span></td>
+            <td class="py-3"><span class="badge-processing px-2 py-1 rounded small text-nowrap">Spracováva sa</span></td>
+            <td class="px-4 py-3 text-end">
+              <a href="#" class="btn-detail bg-secondary bg-opacity-25 border-0 px-3 py-1 rounded shadow-sm text-dark small text-decoration-none">
                 Detail
               </a>
-            </div>
-          </div>
-        </li>
+            </td>
+          </tr>
 
-        <!-- Objednávka 4 -->
-        <li class="order-item px-4 py-3">
-          <div class="row align-items-center g-2">
-            <div class="col-12 col-md-2">
-              <span class="small fw-medium text-dark">#20260302</span>
-            </div>
-            <div class="col-6 col-md-2">
-              <time datetime="2026-03-02" class="small text-muted">02.03.2026</time>
-            </div>
-            <div class="col-12 col-md-4">
-              <span class="small text-dark">Chryzantéma biela – kvetináč</span>
-            </div>
-            <div class="col-6 col-md-2">
-              <span class="small fw-medium text-dark">22.50€</span>
-            </div>
-            <div class="col-6 col-md-1">
-              <span class="badge-pending px-2 py-1 rounded small">Čaká na platbu</span>
-            </div>
-            <div class="col-6 col-md-1 text-end">
-              <a href="#"
-                 class="btn-detail bg-secondary bg-opacity-25 border-0 px-3 py-1 rounded shadow-sm text-dark small text-decoration-none">
+          <!-- Objednávka 4 -->
+          <tr>
+            <td class="px-4 py-3"><span class="small fw-medium text-dark">#20251202</span></td>
+            <td class="py-3"><time datetime="2025-12-02" class="small text-muted">02.12.2025</time></td>
+            <td class="py-3"><span class="small text-dark">Chryzantéma biela – kvetináč</span></td>
+            <td class="py-3"><span class="small fw-medium text-dark">22.50€</span></td>
+            <td class="py-3"><span class="badge-pending px-2 py-1 rounded small text-nowrap">Čaká na platbu</span></td>
+            <td class="px-4 py-3 text-end">
+              <a href="#" class="btn-detail bg-secondary bg-opacity-25 border-0 px-3 py-1 rounded shadow-sm text-dark small text-decoration-none">
                 Detail
               </a>
-            </div>
-          </div>
-        </li>
+            </td>
+          </tr>
 
-        <!-- Objednávka 5 -->
-        <li class="order-item px-4 py-3">
-          <div class="row align-items-center g-2">
-            <div class="col-12 col-md-2">
-              <span class="small fw-medium text-dark">#20241128</span>
-            </div>
-            <div class="col-6 col-md-2">
-              <time datetime="2024-11-28" class="small text-muted">28.11.2024</time>
-            </div>
-            <div class="col-12 col-md-4">
-              <span class="small text-dark">Levanduľa – zväzok, Fialka záhradná</span>
-            </div>
-            <div class="col-6 col-md-2">
-              <span class="small fw-medium text-dark">9.80€</span>
-            </div>
-            <div class="col-6 col-md-1">
-              <span class="badge-cancelled px-2 py-1 rounded small">Zrušená</span>
-            </div>
-            <div class="col-6 col-md-1 text-end">
-              <a href="#"
-                 class="btn-detail bg-secondary bg-opacity-25 border-0 px-3 py-1 rounded shadow-sm text-dark small text-decoration-none">
+          <!-- Objednávka 5 -->
+          <tr>
+            <td class="px-4 py-3"><span class="small fw-medium text-dark">#20241128</span></td>
+            <td class="py-3"><time datetime="2024-11-28" class="small text-muted">28.11.2024</time></td>
+            <td class="py-3"><span class="small text-dark">Levanduľa – zväzok, Fialka</span></td>
+            <td class="py-3"><span class="small fw-medium text-dark">9.80€</span></td>
+            <td class="py-3"><span class="badge-cancelled px-2 py-1 rounded small">Zrušená</span></td>
+            <td class="px-4 py-3 text-end">
+              <a href="#" class="btn-detail bg-secondary bg-opacity-25 border-0 px-3 py-1 rounded shadow-sm text-dark small text-decoration-none">
                 Detail
               </a>
-            </div>
-          </div>
-        </li>
+            </td>
+          </tr>
 
-      </ul>
+          </tbody>
+        </table>
+      </div>
     </div>
 
   </section>
@@ -345,7 +268,6 @@
   <div class="container">
     <div class="row text-start text-md-left">
 
-      <!-- about -->
       <div class="col-md-4 mb-4 mb-md-0">
         <h6 class="fw-bold">Kvetinárstvo.sk</h6>
         <p class="text-muted small mb-2">
@@ -357,7 +279,6 @@
         </p>
       </div>
 
-      <!-- contact -->
       <div class="col-md-4 mb-4 mb-md-0">
         <h6 class="fw-bold">Kontakt</h6>
         <ul class="list-unstyled small text-muted">
@@ -369,7 +290,6 @@
         </ul>
       </div>
 
-      <!-- info -->
       <div class="col-md-4">
         <h6 class="fw-bold">Informácie</h6>
         <ul class="list-unstyled small text-muted">
@@ -381,12 +301,6 @@
         </ul>
       </div>
 
-    </div>
-
-    <hr class="my-4">
-
-    <div class="text-center small text-muted">
-      Navrhnuté pre demo účely • Obsahuje vymyslené údaje
     </div>
   </div>
 </footer>
