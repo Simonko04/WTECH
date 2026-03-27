@@ -18,7 +18,7 @@
       font-weight: 900;
     }
 
-    /* Skrytie natívnych šípok number inputu - rovnaké ako single-product */
+    /* Skrytie natívnych šípok number inputu */
     .quantity-display::-webkit-outer-spin-button,
     .quantity-display::-webkit-inner-spin-button {
       -webkit-appearance: none;
@@ -40,6 +40,10 @@
       background-color: #f8f9fa;
     }
 
+    /* Odkaz na produkt v zozname */
+    .product-link { transition: color 0.2s; }
+    .product-link:hover { color: var(--primary-accent) !important; }
+
     /* Checkbox styling */
     .form-check-input:checked {
       background-color: var(--primary-accent);
@@ -49,14 +53,15 @@
       box-shadow: 0 0 0 0.2rem rgba(214, 51, 132, 0.25);
     }
 
-    /* Tlačidlo pridať do košíka - hover */
-    .btn-add-to-cart {
-      transition: background-color 0.2s, color 0.2s;
-    }
+    /* Tlačidlo pridať do košíka a odstrániť - hover */
+    .btn-add-to-cart { transition: background-color 0.2s, color 0.2s; }
     .btn-add-to-cart:hover {
       background-color: var(--primary-accent) !important;
       color: #fff !important;
     }
+
+    .remove-btn { transition: color 0.2s; cursor: pointer; }
+    .remove-btn:hover { color: #dc3545 !important; }
   </style>
 </head>
 <body class="d-flex flex-column min-vh-100 bg-white">
@@ -120,145 +125,150 @@
     </ol>
   </nav>
 
+  <h1 class="h3 mb-4">Váš zoznam želaní</h1>
+
   <!-- Wishlist zoznam -->
   <section aria-label="Zoznam želaní">
     <ul class="list-unstyled d-flex flex-column gap-3 mb-4">
 
       <!-- Produkt 1 -->
-      <li class="wishlist-item bg-light rounded shadow-sm px-3 py-3">
-        <div class="d-flex align-items-center gap-3 flex-wrap">
+      <li class="wishlist-item bg-light rounded shadow-sm px-3 py-3 border">
+        <div class="d-flex flex-wrap align-items-center gap-3">
 
-          <!-- Checkbox -->
-          <div class="form-check m-0">
-            <input class="form-check-input"
-                   type="checkbox"
-                   id="item-1"
-                   aria-label="Vybrať produkt 1">
+          <div class="d-flex align-items-center gap-3 flex-grow-1" style="min-width: 250px;">
+            <!-- Checkbox -->
+            <div class="form-check m-0">
+              <input class="form-check-input" type="checkbox" id="item-1" aria-label="Vybrať produkt 1">
+            </div>
+            <!-- Obrázok -->
+            <label for="item-1" class="bg-white border rounded cursor-pointer m-0" style="width: 60px; height: 60px; overflow: hidden;">
+              <img src="img/kvet.jpg" alt="Ruža červená" class="w-100 h-100 object-fit-cover">
+            </label>
+            <!-- Názov ako odkaz -->
+            <a href="single-product.html" class="product-link text-dark text-decoration-none fw-medium text-truncate">
+              Ruža červená
+            </a>
           </div>
 
-          <!-- Názov produktu -->
-          <label for="item-1"
-                 class="bg-secondary bg-opacity-25 px-4 py-2 small flex-grow-1 cursor-pointer mb-0">
-            ruza_cervena
-          </label>
+          <div class="d-flex align-items-center gap-3 ms-auto">
+            <!-- Výber množstva -->
+            <div class="d-flex align-items-center gap-2">
+              <span class="fs-5 fw-bold text-dark user-select-none cursor-pointer" aria-label="Znížiť množstvo">—</span>
+              <input type="number" class="quantity-display bg-white border rounded text-center fw-bold shadow-sm" value="1" min="1" aria-label="Množstvo">
+              <span class="fs-5 fw-bold text-dark user-select-none cursor-pointer" aria-label="Zvýšiť množstvo">+</span>
+            </div>
 
-          <!-- Výber množstva -->
-          <div class="d-flex align-items-center gap-2 ms-auto">
-                        <span class="fs-5 fw-bold text-dark user-select-none cursor-pointer"
-                              aria-label="Znížiť množstvo">—</span>
-            <input type="number"
-                   class="quantity-display bg-secondary bg-opacity-25 border-0 rounded-circle text-center fw-bold shadow-sm"
-                   value="1"
-                   min="1"
-                   aria-label="Množstvo">
-            <span class="fs-5 fw-bold text-dark user-select-none cursor-pointer"
-                  aria-label="Zvýšiť množstvo">+</span>
+            <!-- Cena -->
+            <span class="fw-bold text-dark text-end" style="min-width: 5rem;">14.52€</span>
+
+            <!-- Tlačidlo zmazať z wishlistu -->
+            <span class="remove-btn text-muted fs-5 ms-2" title="Odstrániť z wishlistu" aria-label="Odstrániť produkt">
+                <i class="bi bi-x-circle"></i>
+            </span>
           </div>
-
-          <!-- Cena -->
-          <span class="bg-secondary bg-opacity-25 px-3 py-2 small shadow-sm">
-                        14.52€
-                    </span>
 
         </div>
       </li>
 
       <!-- Produkt 2 -->
-      <li class="wishlist-item bg-light rounded shadow-sm px-3 py-3">
-        <div class="d-flex align-items-center gap-3 flex-wrap">
-          <div class="form-check m-0">
-            <input class="form-check-input"
-                   type="checkbox"
-                   id="item-2"
-                   aria-label="Vybrať produkt 2">
+      <li class="wishlist-item bg-light rounded shadow-sm px-3 py-3 border">
+        <div class="d-flex flex-wrap align-items-center gap-3">
+
+          <div class="d-flex align-items-center gap-3 flex-grow-1" style="min-width: 250px;">
+            <div class="form-check m-0">
+              <input class="form-check-input" type="checkbox" id="item-2" aria-label="Vybrať produkt 2">
+            </div>
+            <label for="item-2" class="bg-white border rounded cursor-pointer m-0" style="width: 60px; height: 60px; overflow: hidden;">
+              <img src="img/kvet.jpg" alt="Karafiát biely" class="w-100 h-100 object-fit-cover">
+            </label>
+            <a href="single-product.html" class="product-link text-dark text-decoration-none fw-medium text-truncate">
+              Karafiát biely
+            </a>
           </div>
-          <label for="item-2"
-                 class="bg-secondary bg-opacity-25 px-4 py-2 small flex-grow-1 cursor-pointer mb-0">
-            karafiat biely
-          </label>
-          <div class="d-flex align-items-center gap-2 ms-auto">
-                        <span class="fs-5 fw-bold text-dark user-select-none cursor-pointer"
-                              aria-label="Znížiť množstvo">—</span>
-            <input type="number"
-                   class="quantity-display bg-secondary bg-opacity-25 border-0 rounded-circle text-center fw-bold shadow-sm"
-                   value="1"
-                   min="1"
-                   aria-label="Množstvo">
-            <span class="fs-5 fw-bold text-dark user-select-none cursor-pointer"
-                  aria-label="Zvýšiť množstvo">+</span>
+
+          <div class="d-flex align-items-center gap-3 ms-auto">
+            <div class="d-flex align-items-center gap-2">
+              <span class="fs-5 fw-bold text-dark user-select-none cursor-pointer" aria-label="Znížiť množstvo">—</span>
+              <input type="number" class="quantity-display bg-white border rounded text-center fw-bold shadow-sm" value="1" min="1" aria-label="Množstvo">
+              <span class="fs-5 fw-bold text-dark user-select-none cursor-pointer" aria-label="Zvýšiť množstvo">+</span>
+            </div>
+            <span class="fw-bold text-dark text-end" style="min-width: 5rem;">19.45€</span>
+            <span class="remove-btn text-muted fs-5 ms-2" title="Odstrániť z wishlistu" aria-label="Odstrániť produkt">
+                <i class="bi bi-x-circle"></i>
+            </span>
           </div>
-          <span class="bg-secondary bg-opacity-25 px-3 py-2 small shadow-sm">
-                        19,45€
-                    </span>
+
         </div>
       </li>
 
       <!-- Produkt 3 -->
-      <li class="wishlist-item bg-light rounded shadow-sm px-3 py-3">
-        <div class="d-flex align-items-center gap-3 flex-wrap">
-          <div class="form-check m-0">
-            <input class="form-check-input"
-                   type="checkbox"
-                   id="item-3"
-                   aria-label="Vybrať produkt 3">
+      <li class="wishlist-item bg-light rounded shadow-sm px-3 py-3 border">
+        <div class="d-flex flex-wrap align-items-center gap-3">
+
+          <div class="d-flex align-items-center gap-3 flex-grow-1" style="min-width: 250px;">
+            <div class="form-check m-0">
+              <input class="form-check-input" type="checkbox" id="item-3" aria-label="Vybrať produkt 3">
+            </div>
+            <label for="item-3" class="bg-white border rounded cursor-pointer m-0" style="width: 60px; height: 60px; overflow: hidden;">
+              <img src="img/kvet.jpg" alt="Orgován jarný" class="w-100 h-100 object-fit-cover">
+            </label>
+            <a href="single-product.html" class="product-link text-dark text-decoration-none fw-medium text-truncate">
+              Orgován jarný
+            </a>
           </div>
-          <label for="item-3"
-                 class="bg-secondary bg-opacity-25 px-4 py-2 small flex-grow-1 cursor-pointer mb-0">
-            orgován jarný
-          </label>
-          <div class="d-flex align-items-center gap-2 ms-auto">
-                        <span class="fs-5 fw-bold text-dark user-select-none cursor-pointer"
-                              aria-label="Znížiť množstvo">—</span>
-            <input type="number"
-                   class="quantity-display bg-secondary bg-opacity-25 border-0 rounded-circle text-center fw-bold shadow-sm"
-                   value="1"
-                   min="1"
-                   aria-label="Množstvo">
-            <span class="fs-5 fw-bold text-dark user-select-none cursor-pointer"
-                  aria-label="Zvýšiť množstvo">+</span>
+
+          <div class="d-flex align-items-center gap-3 ms-auto">
+            <div class="d-flex align-items-center gap-2">
+              <span class="fs-5 fw-bold text-dark user-select-none cursor-pointer" aria-label="Znížiť množstvo">—</span>
+              <input type="number" class="quantity-display bg-white border rounded text-center fw-bold shadow-sm" value="1" min="1" aria-label="Množstvo">
+              <span class="fs-5 fw-bold text-dark user-select-none cursor-pointer" aria-label="Zvýšiť množstvo">+</span>
+            </div>
+            <span class="fw-bold text-dark text-end" style="min-width: 5rem;">25.47€</span>
+            <span class="remove-btn text-muted fs-5 ms-2" title="Odstrániť z wishlistu" aria-label="Odstrániť produkt">
+                <i class="bi bi-x-circle"></i>
+            </span>
           </div>
-          <span class="bg-secondary bg-opacity-25 px-3 py-2 small shadow-sm">
-                        25,47€
-                    </span>
+
         </div>
       </li>
 
       <!-- Produkt 4 -->
-      <li class="wishlist-item bg-light rounded shadow-sm px-3 py-3">
-        <div class="d-flex align-items-center gap-3 flex-wrap">
-          <div class="form-check m-0">
-            <input class="form-check-input"
-                   type="checkbox"
-                   id="item-4"
-                   aria-label="Vybrať produkt 4">
+      <li class="wishlist-item bg-light rounded shadow-sm px-3 py-3 border">
+        <div class="d-flex flex-wrap align-items-center gap-3">
+
+          <div class="d-flex align-items-center gap-3 flex-grow-1" style="min-width: 250px;">
+            <div class="form-check m-0">
+              <input class="form-check-input" type="checkbox" id="item-4" aria-label="Vybrať produkt 4">
+            </div>
+            <label for="item-4" class="bg-white border rounded cursor-pointer m-0" style="width: 60px; height: 60px; overflow: hidden;">
+              <img src="img/kvet.jpg" alt="Osika opadavá" class="w-100 h-100 object-fit-cover">
+            </label>
+            <a href="single-product.html" class="product-link text-dark text-decoration-none fw-medium text-truncate">
+              Osika opadavá
+            </a>
           </div>
-          <label for="item-4"
-                 class="bg-secondary bg-opacity-25 px-4 py-2 small flex-grow-1 cursor-pointer mb-0">
-            osyka opadavá
-          </label>
-          <div class="d-flex align-items-center gap-2 ms-auto">
-                        <span class="fs-5 fw-bold text-dark user-select-none cursor-pointer"
-                              aria-label="Znížiť množstvo">—</span>
-            <input type="number"
-                   class="quantity-display bg-secondary bg-opacity-25 border-0 rounded-circle text-center fw-bold shadow-sm"
-                   value="1"
-                   min="1"
-                   aria-label="Množstvo">
-            <span class="fs-5 fw-bold text-dark user-select-none cursor-pointer"
-                  aria-label="Zvýšiť množstvo">+</span>
+
+          <div class="d-flex align-items-center gap-3 ms-auto">
+            <div class="d-flex align-items-center gap-2">
+              <span class="fs-5 fw-bold text-dark user-select-none cursor-pointer" aria-label="Znížiť množstvo">—</span>
+              <input type="number" class="quantity-display bg-white border rounded text-center fw-bold shadow-sm" value="1" min="1" aria-label="Množstvo">
+              <span class="fs-5 fw-bold text-dark user-select-none cursor-pointer" aria-label="Zvýšiť množstvo">+</span>
+            </div>
+            <span class="fw-bold text-dark text-end" style="min-width: 5rem;">19.58€</span>
+            <span class="remove-btn text-muted fs-5 ms-2" title="Odstrániť z wishlistu" aria-label="Odstrániť produkt">
+                <i class="bi bi-x-circle"></i>
+            </span>
           </div>
-          <span class="bg-secondary bg-opacity-25 px-3 py-2 small shadow-sm">
-                        19,58€
-                    </span>
+
         </div>
       </li>
 
     </ul>
 
     <!-- Spodná lišta: stránkovanie + tlačidlo -->
-    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mt-4">
 
-      <!-- Stránkovanie -->
+      <!-- Stránkovanie (Ponechané pôvodné presne podľa vášho zadania) -->
       <nav aria-label="Stránkovanie wishlistu">
         <ul class="pagination pagination-sm mb-0">
           <li class="page-item disabled">
@@ -281,8 +291,8 @@
 
       <!-- Pridať vybrané do košíka -->
       <button type="button"
-              class="btn-add-to-cart bg-secondary bg-opacity-25 border-0 px-4 py-2 rounded shadow-sm text-dark small">
-        pridať do košíka
+              class="btn-add-to-cart bg-secondary bg-opacity-25 border-0 px-4 py-2 rounded shadow-sm text-dark fw-bold text-uppercase">
+        Pridať vybrané do košíka
       </button>
 
     </div>
@@ -291,7 +301,7 @@
 </main>
 
 <!-- FOOTER - nemenený -->
-<footer class="bg-light py-5 border-top">
+<footer class="bg-light py-5 border-top mt-5">
   <div class="container">
     <div class="row text-start text-md-left">
 
