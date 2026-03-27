@@ -65,6 +65,15 @@
         .thumbnail-wrapper.active {
             border-color: var(--primary-accent);
         }
+
+        /* Akčné tlačidlá (množstvo) */
+        .btn-action {
+            background: none;
+            border: none;
+            padding: 0;
+            transition: color 0.2s;
+        }
+        .btn-action:hover { color: var(--primary-accent) !important; }
     </style>
 </head>
 <body class="d-flex flex-column min-vh-100 bg-white">
@@ -131,32 +140,28 @@
                          style="max-width: 25rem; aspect-ratio: 1/1;">
                         <img id="main-image"
                              src="img/kvet.jpg"
-                             alt="Fotografia produktu - karafiat"
+                             alt="Fotografia produktu - Karafiát biely"
                              class="w-100 h-100 object-fit-cover">
                     </div>
-                    <figcaption id="main-flower-name"
-                                class="bg-secondary bg-opacity-25 px-4 py-2 small d-inline-block mt-2"
-                                style="font-size: 1.3rem;">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+                    <figcaption id="main-flower-name" class="bg-secondary bg-opacity-25 px-4 py-2 fs-5 fw-medium d-inline-block mt-3 rounded">
+                        Karafiát biely – kytica
                     </figcaption>
                 </figure>
 
                 <!-- Thumbnaily - ďalšie fotografie produktu -->
-                <div class="d-flex gap-2 justify-content-center flex-wrap"
-                     role="list"
-                     aria-label="Fotografie produktu">
-                    <div class="thumbnail-wrapper active" role="listitem" onclick="">
+                <div class="d-flex gap-2 justify-content-center flex-wrap" aria-label="Ďalšie fotografie produktu">
+                    <button type="button" class="thumbnail-wrapper active p-0" aria-label="Náhľad 1">
                         <img src="img/kvet.jpg" alt="Fotografia produktu 1" class="w-100 h-100 object-fit-cover">
-                    </div>
-                    <div class="thumbnail-wrapper" role="listitem" onclick="">
+                    </button>
+                    <button type="button" class="thumbnail-wrapper p-0" aria-label="Náhľad 2">
                         <img src="img/cactus_2.jpg" alt="Fotografia produktu 2" class="w-100 h-100 object-fit-cover">
-                    </div>
-                    <div class="thumbnail-wrapper" role="listitem" onclick="">
+                    </button>
+                    <button type="button" class="thumbnail-wrapper p-0" aria-label="Náhľad 3">
                         <img src="img/cactus_2.jpg" alt="Fotografia produktu 3" class="w-100 h-100 object-fit-cover">
-                    </div>
-                    <div class="thumbnail-wrapper" role="listitem" onclick="">
+                    </button>
+                    <button type="button" class="thumbnail-wrapper p-0" aria-label="Náhľad 4">
                         <img src="img/cactus_2.jpg" alt="Fotografia produktu 4" class="w-100 h-100 object-fit-cover">
-                    </div>
+                    </button>
                 </div>
 
             </div>
@@ -167,34 +172,26 @@
 
             <!-- Cena + ovládacie prvky -->
             <div class="d-flex align-items-center justify-content-between flex-wrap gap-3 mb-4">
-                <p id="main-price"
-                   class="bg-secondary bg-opacity-25 px-4 py-2 small d-inline-block shadow-sm m-0">
-                    10004.52€
+                <p id="main-price" class="bg-secondary bg-opacity-25 px-4 py-2 fs-5 fw-bold d-inline-block shadow-sm m-0 rounded">
+                    14.52€
                 </p>
 
                 <div class="d-flex align-items-center gap-3 gap-md-4">
                     <!-- Výber množstva -->
                     <div class="d-flex align-items-center gap-2">
                         <label for="main-quantity" class="visually-hidden">Množstvo</label>
-                        <span class="fs-4 fw-bold text-dark user-select-none cursor-pointer"
-                              aria-label="Znížiť množstvo">—</span>
-                        <input type="number"
-                               id="main-quantity"
-                               class="quantity-display bg-secondary bg-opacity-25 border-0 rounded-circle text-center fw-bold shadow-sm"
-                               value="1"
-                               min="1"
-                               aria-label="Množstvo produktu">
-                        <span class="fs-4 fw-bold text-dark user-select-none cursor-pointer"
-                              aria-label="Zvýšiť množstvo">+</span>
+                        <button type="button" class="btn-action fs-4 fw-bold text-dark" aria-label="Znížiť množstvo">—</button>
+                        <input type="number" id="main-quantity" class="quantity-display bg-secondary bg-opacity-25 border-0 rounded-circle text-center fw-bold shadow-sm" value="1" min="1">
+                        <button type="button" class="btn-action fs-4 fw-bold text-dark" aria-label="Zvýšiť množstvo">+</button>
                     </div>
 
-                    <!-- Pridať do košíka - rovnaký štýl ako header -->
-                    <a href="#" class="text-dark interaction-icon" aria-label="Pridať do košíka">
+                    <!-- Pridať do košíka -->
+                    <a href="#" class="text-dark interaction-icon" aria-label="Pridať do košíka" role="button">
                         <i class="bi bi-cart-plus fs-3"></i>
                     </a>
 
-                    <!-- Pridať do wishlistu - rovnaký štýl ako header -->
-                    <a href="#" class="text-dark interaction-icon" aria-label="Pridať do obľúbených">
+                    <!-- Pridať do wishlistu -->
+                    <a href="#" class="text-dark interaction-icon" aria-label="Pridať do obľúbených" role="button">
                         <i class="bi bi-heart fs-3"></i>
                     </a>
                 </div>
@@ -203,9 +200,9 @@
             <!-- Krátky popis -->
             <div class="bg-light p-4 rounded flex-grow-1 d-flex align-items-center justify-content-center text-center shadow-sm">
                 <p id="short-description" class="fs-5 fw-light m-0">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    Nádherná kytica bielych karafiátov, ktorá zaručene poteší vašich blízkych.
+                    Kvety sú vždy čerstvé, starostlivo aranžované našimi floristami a doručované
+                    s maximálnou opatrnosťou pre zachovanie ich krásy.
                 </p>
             </div>
 
@@ -218,12 +215,11 @@
             <div class="bg-light p-5 rounded shadow-sm">
                 <h2 class="h5 fw-semibold mb-3">Detailný popis</h2>
                 <p id="full-description" class="fs-5 fw-light m-0">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-                    dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-                    mollit anim id est laborum.
+                    Biele karafiáty symbolizujú čistotu, šťastie a úprimnú lásku. Táto exkluzívna
+                    kytica sa skladá z prémiových kvetov dovezených priamo od lokálnych pestovateľov.
+                    Vďaka ich vysokej trvácnosti vám pri správnej starostlivosti (pravidelná výmena vody
+                    a zastrihávanie stoniek) vydržia vo váze svieže až dva týždne. Kytica je dodávaná
+                    v elegantnom balení s možnosťou pridať osobné venovanie.
                 </p>
             </div>
         </div>
@@ -238,14 +234,12 @@
             <div class="col-6 col-sm-4 col-md-3 col-lg-2">
                 <article>
                     <a id="link-1" href="#" class="text-decoration-none">
-                        <div class="recommendation-card w-100 bg-light overflow-hidden shadow-sm mb-1"
-                             style="aspect-ratio: 3/4;">
-                            <img id="img1" src="img/kvet.jpg" alt="Súvisiaci produkt kaktus"
-                                 class="w-100 h-100 object-fit-cover">
+                        <div class="recommendation-card w-100 bg-light overflow-hidden shadow-sm mb-1" style="aspect-ratio: 3/4;">
+                            <img id="img1" src="img/kvet.jpg" alt="Kaktus" class="w-100 h-100 object-fit-cover">
                         </div>
                         <div class="bg-secondary bg-opacity-25 p-2 small text-dark shadow-sm text-center">
-                            <span id="name-1" class="d-block fw-bold text-truncate">kaktus</span>
-                            <span id="price-1">0.00€</span>
+                            <span id="name-1" class="d-block fw-bold text-truncate">Kaktus domáci</span>
+                            <span id="price-1">8.50€</span>
                         </div>
                     </a>
                 </article>
@@ -254,14 +248,12 @@
             <div class="col-6 col-sm-4 col-md-3 col-lg-2">
                 <article>
                     <a id="link-2" href="#" class="text-decoration-none">
-                        <div class="recommendation-card w-100 bg-light overflow-hidden shadow-sm mb-1"
-                             style="aspect-ratio: 3/4;">
-                            <img id="img-2" src="img/kvet.jpg" alt="Súvisiaci produkt karafiat"
-                                 class="w-100 h-100 object-fit-cover">
+                        <div class="recommendation-card w-100 bg-light overflow-hidden shadow-sm mb-1" style="aspect-ratio: 3/4;">
+                            <img id="img-2" src="img/kvet.jpg" alt="Ruža" class="w-100 h-100 object-fit-cover">
                         </div>
                         <div class="bg-secondary bg-opacity-25 p-2 small text-dark shadow-sm text-center">
-                            <span id="name-2" class="d-block fw-bold text-truncate">karafiat</span>
-                            <span id="price-2">0.00€</span>
+                            <span id="name-2" class="d-block fw-bold text-truncate">Ruža červená</span>
+                            <span id="price-2">5.00€</span>
                         </div>
                     </a>
                 </article>
@@ -270,14 +262,12 @@
             <div class="col-6 col-sm-4 col-md-3 col-lg-2">
                 <article>
                     <a id="link-3" href="#" class="text-decoration-none">
-                        <div class="recommendation-card w-100 bg-light overflow-hidden shadow-sm mb-1"
-                             style="aspect-ratio: 3/4;">
-                            <img id="img-3" src="img/kvet.jpg" alt="Súvisiaci produkt ruža"
-                                 class="w-100 h-100 object-fit-cover">
+                        <div class="recommendation-card w-100 bg-light overflow-hidden shadow-sm mb-1" style="aspect-ratio: 3/4;">
+                            <img id="img-3" src="img/kvet.jpg" alt="Orchidea" class="w-100 h-100 object-fit-cover">
                         </div>
                         <div class="bg-secondary bg-opacity-25 p-2 small text-dark shadow-sm text-center">
-                            <span id="name-3" class="d-block fw-bold text-truncate">ruža</span>
-                            <span id="price-3">0.00€</span>
+                            <span id="name-3" class="d-block fw-bold text-truncate">Orchidea fialová</span>
+                            <span id="price-3">14.99€</span>
                         </div>
                     </a>
                 </article>
@@ -292,7 +282,6 @@
     <div class="container">
         <div class="row text-start text-md-left">
 
-            <!-- about -->
             <div class="col-md-4 mb-4 mb-md-0">
                 <h6 class="fw-bold">Kvetinárstvo.sk</h6>
                 <p class="text-muted small mb-2">
@@ -304,7 +293,6 @@
                 </p>
             </div>
 
-            <!-- contact -->
             <div class="col-md-4 mb-4 mb-md-0">
                 <h6 class="fw-bold">Kontakt</h6>
                 <ul class="list-unstyled small text-muted">
@@ -316,7 +304,6 @@
                 </ul>
             </div>
 
-            <!-- info -->
             <div class="col-md-4">
                 <h6 class="fw-bold">Informácie</h6>
                 <ul class="list-unstyled small text-muted">
@@ -328,12 +315,6 @@
                 </ul>
             </div>
 
-        </div>
-
-        <hr class="my-4">
-
-        <div class="text-center small text-muted">
-            Navrhnuté pre demo účely • Obsahuje vymyslené údaje
         </div>
     </div>
 </footer>
