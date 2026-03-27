@@ -84,7 +84,6 @@
 
 <main class="container py-5 flex-grow-1">
 
-    <!-- Breadcrumb - podľa wireframu -->
     <nav aria-label="breadcrumb" class="mb-4">
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
@@ -96,7 +95,7 @@
 
     <section class="row g-4 align-items-stretch" aria-label="Profil používateľa">
 
-        <!-- Ľavý stĺpec: avatar, meno, status, akčné tlačidlá -->
+        <!-- avatar, meno-->
         <div class="col-lg-5">
             <div class="bg-light p-5 rounded shadow-sm d-flex flex-column align-items-center text-center h-100">
 
@@ -121,7 +120,6 @@
                     </span>
                 </p>
 
-                <!-- Akčné tlačidlá -->
                 <div class="d-flex justify-content-center gap-3 mt-auto pt-3">
                     <button id="btn-history"
                             type="button"
@@ -138,43 +136,46 @@
             </div>
         </div>
 
-        <!-- Pravý stĺpec: kontaktné informácie -->
         <div class="col-lg-7">
             <div class="bg-light p-5 rounded shadow-sm h-100 d-flex flex-column">
 
                 <h2 class="h5 mb-4 pb-2 border-bottom text-dark">Contact Information</h2>
 
-                <dl class="d-flex flex-column gap-3 fs-6 mb-5">
+                <table class="table table-borderless mb-5 bg-transparent" style="--bs-table-bg: transparent;">
+                    <tbody>
+                    <!-- E-mail -->
+                    <tr>
+                        <td class="text-muted w-25 align-middle">E-mail:</td>
+                        <td class="fw-medium text-dark text-sm-end" id="user-email">
+                            <a class="text-dark text-decoration-none">jozef.mrkva@student.stuba.sk</a>
+                        </td>
+                    </tr>
 
-                    <div class="d-flex flex-sm-row flex-column justify-content-between">
-                        <dt class="fw-normal text-muted">E-mail:</dt>
-                        <dd class="fw-medium text-dark mb-0" id="user-email">
-                            jozef.mrkva@student.stuba.sk
-                        </dd>
-                    </div>
-
-                    <div class="d-flex flex-sm-row flex-column justify-content-between">
-                        <dt class="fw-normal text-muted">Phone:</dt>
-                        <dd class="fw-medium text-dark mb-0" id="user-phone">
+                    <!-- Telefón -->
+                    <tr>
+                        <td class="text-muted w-25 align-middle">Phone:</td>
+                        <td class="fw-medium text-dark text-sm-end" id="user-phone">
                             +421 912 345 678
-                        </dd>
-                    </div>
+                        </td>
+                    </tr>
 
-                    <div class="d-flex flex-sm-row flex-column justify-content-between">
-                        <dt class="fw-normal text-muted">Address:</dt>
-                        <dd class="fw-medium text-dark text-sm-end mb-0" id="user-address">
+                    <!-- Adresa -->
+                    <tr>
+                        <td class="text-muted w-25 align-middle">Address:</td>
+                        <td class="fw-medium text-dark text-sm-end" id="user-address">
                             Ilkovičova 2<br>841 04 Bratislava
-                        </dd>
-                    </div>
+                        </td>
+                    </tr>
 
-                    <div class="d-flex flex-sm-row flex-column justify-content-between">
-                        <dt class="fw-normal text-muted">Member since:</dt>
-                        <dd class="fw-medium text-dark mb-0">
-                            <time id="user-reg-date" datetime="2025-09">September 2025</time>
-                        </dd>
-                    </div>
-
-                </dl>
+                    <!-- Členom od -->
+                    <tr>
+                        <td class="text-muted w-25 align-middle">Member since:</td>
+                        <td class="fw-medium text-dark text-sm-end" id="user-reg-date">
+                            September 2025
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
 
                 <div class="mt-auto text-center">
                     <button id="edit_profile"
@@ -191,12 +192,10 @@
 
 </main>
 
-<!-- FOOTER - nemenený -->
 <footer class="bg-light py-5 border-top">
     <div class="container">
         <div class="row text-start text-md-left">
 
-            <!-- about -->
             <div class="col-md-4 mb-4 mb-md-0">
                 <h6 class="fw-bold">Kvetinárstvo.sk</h6>
                 <p class="text-muted small mb-2">
@@ -208,7 +207,6 @@
                 </p>
             </div>
 
-            <!-- contact -->
             <div class="col-md-4 mb-4 mb-md-0">
                 <h6 class="fw-bold">Kontakt</h6>
                 <ul class="list-unstyled small text-muted">
@@ -220,7 +218,6 @@
                 </ul>
             </div>
 
-            <!-- info -->
             <div class="col-md-4">
                 <h6 class="fw-bold">Informácie</h6>
                 <ul class="list-unstyled small text-muted">
