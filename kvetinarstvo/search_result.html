@@ -68,9 +68,9 @@
         </div>
     </header>
 
-    <!-- MAIN CONTENT – Search result (podľa screenshotu) -->
+    <!-- MAIN CONTENT – Search result -->
     <main class="flex-grow-1 py-4">
-        <!-- Sekundárny search bar (ako v obrázku) -->
+        <!-- Sekundárny search bar -->
         <div class="search-bar">
             <div class="container">
                 <form>
@@ -86,11 +86,33 @@
 
         <div class="container py-5">
             <div class="row g-5">
-                <!-- LEFT – Filtrovanie (rozšírené podľa požiadavky) -->
+                <!-- LEFT – Filtrovanie -->
                 <div class="col-lg-3">
                     <div class="filter-sidebar sticky-top" style="top: 20px;">
                         <h5 class="mb-4 fw-bold">Filtrovanie</h5>
                         
+						 <!-- Kategorie kvetov -->
+                        <div class="mb-5">
+                            <h6 class="mb-3 text-muted fw-medium">Kategorie</h6>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" id="romantika_narodeniny">
+                                <label class="form-check-label" for="romantika_narodeniny">Romantika & Narodeniny</label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" id="svadby_oslavy">
+                                <label class="form-check-label" for="svadby_oslavy">Svadby & Oslavy</label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" id="sustrast">
+                                <label class="form-check-label" for="sustrast">Sústrasť</label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" id="firemne_darceky">
+                                <label class="form-check-label" for="firemne_darceky">Firemné darčeky</label>
+                            </div>
+                        </div>
+						
+						
                         <!-- Typy kvetov -->
                         <div class="mb-5">
                             <h6 class="mb-3 text-muted fw-medium">Typy kvetov</h6>
@@ -138,7 +160,7 @@
                             </div>
                         </div>
                         
-                        <!-- Ostatné (other stuff) -->
+                        <!-- Ostatné -->
                         <div>
                             <h6 class="mb-3 text-muted fw-medium">Ostatné</h6>
                             <div class="form-check mb-2">
@@ -153,7 +175,7 @@
                     </div>
                 </div>
 
-                <!-- RIGHT – Produkty (presne rovnaký štýl ako na home page) -->
+                <!-- RIGHT – Produkty -->
                 <div class="col-lg-9">
                     <div class="row g-4">
                         <!-- Product 1 -->
@@ -248,7 +270,7 @@
                         </div>
                     </div>
 
-                    <!-- Pagination (presne ako v obrázku) -->
+                    <!-- Pagination -->
                     <div class="d-flex justify-content-center mt-5">
                         <nav aria-label="Page navigation">
                             <ul class="pagination">
