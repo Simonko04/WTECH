@@ -74,6 +74,14 @@
             transition: color 0.2s;
         }
         .btn-action:hover { color: var(--primary-accent) !important; }
+		
+		    
+        .product-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            background: #f8f9fa;
+        }
     </style>
 </head>
 <body class="d-flex flex-column min-vh-100 bg-white">
@@ -238,46 +246,34 @@
 
         <div class="row g-4 justify-content-center" id="related-row">
 
-            <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-                <article>
-                    <a id="link-1" href="#" class="text-decoration-none">
-                        <div class="recommendation-card w-100 bg-light overflow-hidden shadow-sm mb-1" style="aspect-ratio: 3/4;">
-                            <img id="img1" src="img/kvet.jpg" alt="Kaktus" class="w-100 h-100 object-fit-cover">
-                        </div>
-                        <div class="bg-secondary bg-opacity-25 p-2 small text-dark shadow-sm text-center">
-                            <span id="name-1" class="d-block fw-bold text-truncate">Kaktus domáci</span>
-                            <span id="price-1">8.50€</span>
-                        </div>
-                    </a>
-                </article>
+            <div class="col-6 col-md-4 col-lg-3">
+                <div class="card h-100 border-0 shadow">
+                    <img src="./img/rose.jpg" alt="Rose Elegance" class="product-img">
+                    <div class="card-body text-center p-3">
+                        <p class="mb-1 fw-medium">Rose Elegance</p>
+                        <p class="text-muted mb-0">12.99€</p>
+                    </div>
+                </div>
             </div>
 
-            <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-                <article>
-                    <a id="link-2" href="#" class="text-decoration-none">
-                        <div class="recommendation-card w-100 bg-light overflow-hidden shadow-sm mb-1" style="aspect-ratio: 3/4;">
-                            <img id="img-2" src="img/kvet.jpg" alt="Ruža" class="w-100 h-100 object-fit-cover">
-                        </div>
-                        <div class="bg-secondary bg-opacity-25 p-2 small text-dark shadow-sm text-center">
-                            <span id="name-2" class="d-block fw-bold text-truncate">Ruža červená</span>
-                            <span id="price-2">5.00€</span>
-                        </div>
-                    </a>
-                </article>
+            <div class="col-6 col-md-4 col-lg-3">
+                <div class="card h-100 border-0 shadow">
+                    <img src="./img/orchid.jpg" alt="Orchid Grace" class="product-img">
+                    <div class="card-body text-center p-3">
+                        <p class="mb-1 fw-medium">Orchid Grace</p>
+                        <p class="text-muted mb-0">18.75€</p>
+                    </div>
+                </div>
             </div>
 
-            <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-                <article>
-                    <a id="link-3" href="#" class="text-decoration-none">
-                        <div class="recommendation-card w-100 bg-light overflow-hidden shadow-sm mb-1" style="aspect-ratio: 3/4;">
-                            <img id="img-3" src="img/kvet.jpg" alt="Orchidea" class="w-100 h-100 object-fit-cover">
-                        </div>
-                        <div class="bg-secondary bg-opacity-25 p-2 small text-dark shadow-sm text-center">
-                            <span id="name-3" class="d-block fw-bold text-truncate">Orchidea fialová</span>
-                            <span id="price-3">14.99€</span>
-                        </div>
-                    </a>
-                </article>
+            <div class="col-6 col-md-4 col-lg-3">
+                <div class="card h-100 border-0 shadow">
+                    <img src="./img/lily.jpg" alt="Lily Serenity" class="product-img">
+                    <div class="card-body text-center p-3">
+                        <p class="mb-1 fw-medium">Lily Serenity</p>
+                        <p class="text-muted mb-0">13.80€</p>
+                    </div>
+                </div>
             </div>
 
         </div>
