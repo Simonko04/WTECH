@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search result - kvetinarstvo.sk</title>
+ 
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap ikony -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+ 
+    <style>
+        /* TODO ak bude moc css, presunut do style.css */
+        .logo-placeholder {
+            font-size: 1.8rem;
+            font-weight: 900;
+        }
+       
+        .product-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            background: #f8f9fa;
+        }
+       
+        .filter-sidebar {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 0.375rem;
+            padding: 1.5rem;
+        }
+       
+        .search-bar {
+            background: #e9ecef;
+            padding: 0.75rem;
+        }
+		
+		.sort-container {
+            position: relative;
+        }
+
+        .sort-options {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 0.375rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            z-index: 1000;
+            min-width: 200px;
+            padding: 0.5rem 0;
+        }
+
+        .sort-btn:checked ~ .sort-options {
+            display: block;
+        }
+
+        .sort-option {
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+        }
+
+        .sort-option:hover {
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body class="bg-white d-flex flex-column min-vh-100">
+     
+	<!-- HEADER -->
+    <header class="border-bottom bg-white shadow-sm">
+        <div class="container py-3">
+           
+            <!-- Horný riadok headeru: logo + názov (vľavo) + vyhľadávanie (na desktop) + ikony (vpravo) -->
+            <div class="d-flex align-items-center">
+              
+                <!-- Logo + meno -->
+                <a href="Home_page.html" class="d-flex align-items-center text-decoration-none me-auto">
+                    <span class="logo-placeholder text-danger">LOGO</span>
+                    <span class="ms-3 fw-bold fs-4 text-dark">kvetinarstvo.sk</span>
+                </a>
+              
+                <!-- menu ikony -->
+                <div class="d-flex gap-4">
+                    <a href="wishlist.html" class="text-dark">
+                        <i class="bi bi-heart fs-3"></i>
+                    </a>
+                    <a href="profile_page.html" class="text-dark">
+                        <i class="bi bi-person-circle fs-3"></i>
+                    </a>
+                    <a href="cart.html" class="text-dark">
+                        <i class="bi bi-cart fs-3"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT – Search result -->
+    <main class="flex-grow-1 py-4">
+        <!-- Sekundárny search bar -->
+        <div class="search-bar">
+            <div class="container">
+                <form>
+                    <div class="input-group">
+                        <span class="input-group-text bg-white border-0">
+                            <i class="bi bi-search"></i>
+                        </span>
+                        <input type="text" class="form-control border-0 shadow-none" placeholder="Search" aria-label="Search">
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="container py-5">
+            <div class="row g-5">
+                <!-- LEFT – Filtrovanie -->
+                <div class="col-lg-3">
+                    <div class="filter-sidebar sticky-top" style="top: 20px;">
+                        <h5 class="mb-4 fw-bold">Filtrovanie</h5>
+                        
+						 <!-- Kategorie kvetov -->
+                        <div class="mb-5">
+                            <h6 class="mb-3 text-muted fw-medium">Kategorie</h6>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" id="romantika_narodeniny">
+                                <label class="form-check-label" for="romantika_narodeniny">Romantika & Narodeniny</label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" id="svadby_oslavy">
+                                <label class="form-check-label" for="svadby_oslavy">Svadby & Oslavy</label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" id="sustrast">
+                                <label class="form-check-label" for="sustrast">Sústrasť</label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" id="firemne_darceky">
+                                <label class="form-check-label" for="firemne_darceky">Firemné darčeky</label>
+                            </div>
+                        </div>
+						
+						
+                        <!-- Typy kvetov -->
+                        <div class="mb-5">
+                            <h6 class="mb-3 text-muted fw-medium">Typy kvetov</h6>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" id="ruze" checked>
+                                <label class="form-check-label" for="ruze">Ruže</label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" id="tulipany">
+                                <label class="form-check-label" for="tulipany">Tulipány</label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" id="orchidey">
+                                <label class="form-check-label" for="orchidey">Orchidey</label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" id="lilie">
+                                <label class="form-check-label" for="lilie">Lilie</label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" id="gerbera">
+                                <label class="form-check-label" for="gerbera">Gerbera</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="sunflowers">
+                                <label class="form-check-label" for="sunflowers">Slnečnice</label>
+                            </div>
+                        </div>
+                        
+                        <!-- Cenové rozpätie -->
+                        <div class="mb-5">
+                            <h6 class="mb-3 text-muted fw-medium">Cenové rozpätie</h6>
+                            <div class="row g-2">
+                                <div class="col-6">
+                                    <label class="form-label small text-muted">Od</label>
+                                    <input type="number" class="form-control" value="0" min="0">
+                                </div>
+                                <div class="col-6">
+                                    <label class="form-label small text-muted">Do</label>
+                                    <input type="number" class="form-control" value="50" min="0">
+                                </div>
+                            </div>
+                            <div class="mt-3">
+                                <input type="range" class="form-range" min="0" max="100" value="50">
+                            </div>
+                        </div>
+                        
+                        <!-- Ostatné -->
+                        <div>
+                            <h6 class="mb-3 text-muted fw-medium">Ostatné</h6>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" id="sklad" checked>
+                                <label class="form-check-label" for="sklad">Na sklade</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="doprava">
+                                <label class="form-check-label" for="doprava">Doprava zadarmo</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT – Produkty -->
+                <div class="col-lg-9">
+				
+					<div class="d-flex justify-content-between align-items-center mb-4">
+                        <h5 class="mb-0 fw-bold">Výsledky vyhľadávania</h5>
+                        
+                        <div class="sort-container">
+                            <label class="btn btn-outline-secondary dropdown-toggle sort-btn" for="sort-toggle">
+                                <i class="bi bi-sort-down-alt me-2"></i>
+                                Preusporiadať
+                            </label>
+                            <input type="checkbox" id="sort-toggle" class="sort-btn d-none">
+
+                            <div class="sort-options">
+                                <div class="sort-option">Od najlacnejšieho</div>
+                                <div class="sort-option">Od najdrahšieho</div>
+                                <div class="sort-option">Názov A – Z</div>
+                                <div class="sort-option">Názov Z – A</div>
+                            </div>
+                        </div>
+                    </div>
+					
+                    <div class="row g-4">
+                        <!-- Product 1 -->
+                        <div class="col-6 col-md-4 col-lg-4">
+                            <div class="card h-100 border-0 shadow">
+                                <img src="./img/rose.jpg" alt="Rose Elegance" class="product-img">
+                                <div class="card-body text-center p-3">
+                                    <p class="mb-1 fw-medium">Rose Elegance</p>
+                                    <p class="text-muted mb-0">12.99€</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Product 2 -->
+                        <div class="col-6 col-md-4 col-lg-4">
+                            <div class="card h-100 border-0 shadow">
+                                <img src="./img/tulip.jpg" alt="Sunny Tulip" class="product-img">
+                                <div class="card-body text-center p-3">
+                                    <p class="mb-1 fw-medium">Sunny Tulip</p>
+                                    <p class="text-muted mb-0">9.49€</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Product 3 -->
+                        <div class="col-6 col-md-4 col-lg-4">
+                            <div class="card h-100 border-0 shadow">
+                                <img src="./img/laven.jpg" alt="Lavender Bliss" class="product-img">
+                                <div class="card-body text-center p-3">
+                                    <p class="mb-1 fw-medium">Lavender Bliss</p>
+                                    <p class="text-muted mb-0">11.20€</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Product 4 -->
+                        <div class="col-6 col-md-4 col-lg-4">
+                            <div class="card h-100 border-0 shadow">
+                                <img src="./img/orchid.jpg" alt="Orchid Grace" class="product-img">
+                                <div class="card-body text-center p-3">
+                                    <p class="mb-1 fw-medium">Orchid Grace</p>
+                                    <p class="text-muted mb-0">18.75€</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Product 5 -->
+                        <div class="col-6 col-md-4 col-lg-4">
+                            <div class="card h-100 border-0 shadow">
+                                <img src="./img/pheon.jpg" alt="Peony Charm" class="product-img">
+                                <div class="card-body text-center p-3">
+                                    <p class="mb-1 fw-medium">Peony Charm</p>
+                                    <p class="text-muted mb-0">14.30€</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Product 6 -->
+                        <div class="col-6 col-md-4 col-lg-4">
+                            <div class="card h-100 border-0 shadow">
+                                <img src="./img/daisy.jpg" alt="Daisy Fresh" class="product-img">
+                                <div class="card-body text-center p-3">
+                                    <p class="mb-1 fw-medium">Daisy Fresh</p>
+                                    <p class="text-muted mb-0">7.99€</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Product 7 -->
+                        <div class="col-6 col-md-4 col-lg-4">
+                            <div class="card h-100 border-0 shadow">
+                                <img src="./img/sunflower.jpg" alt="Sunflower Joy" class="product-img">
+                                <div class="card-body text-center p-3">
+                                    <p class="mb-1 fw-medium">Sunflower Joy</p>
+                                    <p class="text-muted mb-0">10.50€</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Product 8 -->
+                        <div class="col-6 col-md-4 col-lg-4">
+                            <div class="card h-100 border-0 shadow">
+                                <img src="./img/lily.jpg" alt="Lily Serenity" class="product-img">
+                                <div class="card-body text-center p-3">
+                                    <p class="mb-1 fw-medium">Lily Serenity</p>
+                                    <p class="text-muted mb-0">13.80€</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Product 9 -->
+                        <div class="col-6 col-md-4 col-lg-4">
+                            <div class="card h-100 border-0 shadow">
+                                <img src="./img/geranium.jpg" alt="Geranium Glow" class="product-img">
+                                <div class="card-body text-center p-3">
+                                    <p class="mb-1 fw-medium">Geranium Glow</p>
+                                    <p class="text-muted mb-0">8.75€</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="d-flex justify-content-center mt-5">
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination">
+                                <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Previous">
+                                        <span aria-hidden="true">‹</span>
+                                    </a>
+                                </li>
+                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Next">
+                                        <span aria-hidden="true">›</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+	<!-- FOOTER -->
+    <footer class="bg-light py-5 border-top">
+		<div class="container">
+			<div class="row text-start text-md-left">
+				
+				<!-- about -->
+				<div class="col-md-4 mb-4 mb-md-0">
+					<a href="about_us.html" class="text-decoration-none text-dark d-block">
+						<h6 class="fw-bold">Kvetinárstvo.sk</h6>
+					</a>
+					<p class="text-muted small mb-2">
+						Prinášame čerstvé kvety pre každú príležitosť. 
+						Rýchle doručenie, kvalitné aranžmány a spokojní zákazníci.
+					</p>
+					<a href="about_us.html" class="text-decoration-none small fw-medium text-dark">
+						O nás →
+					</a>
+					<p class="text-muted small mb-0">
+						© 2026 Kvetinarstvo.sk
+					</p>
+				</div>
+
+				<!-- contact -->
+				<div class="col-md-4 mb-4 mb-md-0">
+					<a href="about_us.html" class="text-decoration-none text-dark d-block">
+						<h6 class="fw-bold">Kontakt</h6>
+					</a>	
+					<ul class="list-unstyled small text-muted">
+						<li>Hlavná 123</li>
+						<li>811 01 Bratislava</li>
+						<li>Slovensko</li>
+						<li class="mt-2">Tel: +421 900 123 456</li>
+						<li>Email: info@kvetinarstvo.sk</li>
+					</ul>
+				</div>
+
+				<!-- info -->
+				<div class="col-md-4">
+					<a href="about_us.html" class="text-decoration-none text-dark d-block">
+						<h6 class="fw-bold">Informácie</h6>
+					</a>
+					<ul class="list-unstyled small text-muted">
+						<li>IČO: 12345678</li>
+						<li>DIČ: 2023456789</li>
+						<li>Otváracie hodiny: Po–Pi 8:00 – 18:00</li>
+						<li>So 9:00 – 14:00</li>
+						<li class="mt-2">Doručenie v rámci SR</li>
+					</ul>
+				</div>
+
+			</div>
+
+			<hr class="my-4">
+
+			<div class="text-center small text-muted">
+				Navrhnuté pre demo účely • Obsahuje vymyslené údaje
+			</div>
+		</div>
+	</footer>
+
+    <!-- Bootstrap 5.3 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
