@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prihlásenie - kvetinarstvo.sk</title>
-	
+
     <!-- Bootstrap 5.3 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap ikony -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-   
+
     <style>
         .logo-placeholder {
             font-size: 1.8rem;
@@ -56,54 +56,38 @@
 
     <!-- HEADER -->
     <header class="border-bottom bg-white shadow-sm">
-        <div class="container py-3">
-           
-            <!-- Horný riadok headeru: logo + názov (vľavo) + vyhľadávanie (na desktop) + ikony (vpravo) -->
-            <div class="d-flex align-items-center">
-              
-                <!-- Logo + meno -->
-                <a href="Home_page.html" class="d-flex align-items-center text-decoration-none me-auto">
-                    <span class="logo-placeholder text-danger">LOGO</span>
-                    <span class="ms-3 fw-bold fs-4 text-dark">kvetinarstvo.sk</span>
-                </a>
-                <!-- Search - vedla loga - iba na desktop, skrity na mobile -->
-                <form class="flex-grow-1 mx-4 d-none d-lg-flex">
-                    <div class="input-group">
-                        <input type="text"
-                               class="form-control"
-                               placeholder="Search"
-                               aria-label="Search">
-                        <button class="btn btn-outline-secondary" type="button">
-                            <i class="bi bi-search"></i>
-                        </button>
+            <div class="container py-3">
+                <div class="d-flex align-items-center">
+                    <a href="{{ url('/') }}" class="d-flex align-items-center text-decoration-none me-auto">
+                        <span class="logo-placeholder text-danger">LOGO</span>
+                        <span class="ms-3 fw-bold fs-4 text-dark">kvetinarstvo.sk</span>
+                    </a>
+                    <form class="flex-grow-1 mx-4 d-none d-lg-flex">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-secondary" type="button"><i class="bi bi-search"></i></button>
+                        </div>
+                    </form>
+                    <div class="d-flex gap-4 align-items-center">
+                        <a href="{{ url('/wishlist') }}" class="text-dark"><i class="bi bi-heart fs-3"></i></a>
+                        @auth
+                            <a href="{{ url('/profile') }}" class="text-dark"><i class="bi bi-person-circle fs-3"></i></a>
+                        @else
+                            <a href="{{ route('login') }}" class="text-dark"><i class="bi bi-person-circle fs-3"></i></a>
+                        @endauth
+                        <a href="{{ url('/cart') }}" class="text-dark"><i class="bi bi-cart fs-3"></i></a>
                     </div>
-                </form>
-                <!-- menu ikony -->
-                <div class="d-flex gap-4">
-                    <a href="wishlist.html" class="text-dark">
-                        <i class="bi bi-heart fs-3"></i>
-                    </a>
-                    <a href="cart.html" class="text-dark">
-                        <i class="bi bi-cart fs-3"></i>
-                    </a>
+                </div>
+                <div class="mt-3 d-lg-none">
+                    <form>
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-secondary" type="button"><i class="bi bi-search"></i></button>
+                        </div>
+                    </form>
                 </div>
             </div>
-            <!-- MOBILE SEARCH - pod logom - iba na mobile -->
-            <div class="mt-3 d-lg-none">
-                <form>
-                    <div class="input-group">
-                        <input type="text"
-                               class="form-control"
-                               placeholder="Search"
-                               aria-label="Search">
-                        <button class="btn btn-outline-secondary" type="button">
-                            <i class="bi bi-search"></i>
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </header>
+        </header>
 
     <!-- BODY – Login -->
     <main class="flex-grow-1 d-flex align-items-center py-5">
@@ -111,7 +95,7 @@
             <div class="auth-card">
                 <div class="auth-body">
                     <h4 class="text-center mb-4 fw-bold">Prihlásiť sa</h4>
-                    
+
                     <form>
                         <div class="mb-3">
                             <input type="text" class="form-control form-control-lg" placeholder="Meno alebo email">
@@ -119,7 +103,7 @@
                         <div class="mb-4">
                             <input type="password" class="form-control form-control-lg" placeholder="Heslo">
                         </div>
-                        
+
                         <button type="submit" class="btn btn-primary-custom text-white w-100 mb-3">
                             Prihlásiť sa
                         </button>
@@ -129,7 +113,7 @@
                         </div>
 
                         <div class="text-center mt-4 pt-3 border-top">
-                            Nemáš účet? 
+                            Nemáš účet?
                             <a href="register.html" class="switch-link">Zaregistrovať sa</a>
                         </div>
                     </form>
@@ -140,63 +124,40 @@
 
 	<!-- FOOTER -->
     <footer class="bg-light py-5 border-top">
-		<div class="container">
-			<div class="row text-start text-md-left">
-				
-				<!-- about -->
-				<div class="col-md-4 mb-4 mb-md-0">
-					<a href="about_us.html" class="text-decoration-none text-dark d-block">
-						<h6 class="fw-bold">Kvetinárstvo.sk</h6>
-					</a>
-					<p class="text-muted small mb-2">
-						Prinášame čerstvé kvety pre každú príležitosť. 
-						Rýchle doručenie, kvalitné aranžmány a spokojní zákazníci.
-					</p>
-					<a href="about_us.html" class="text-decoration-none small fw-medium text-dark">
-						O nás →
-					</a>
-					<p class="text-muted small mb-0">
-						© 2026 Kvetinarstvo.sk
-					</p>
-				</div>
-
-				<!-- contact -->
-				<div class="col-md-4 mb-4 mb-md-0">
-					<a href="about_us.html" class="text-decoration-none text-dark d-block">
-						<h6 class="fw-bold">Kontakt</h6>
-					</a>	
-					<ul class="list-unstyled small text-muted">
-						<li>Hlavná 123</li>
-						<li>811 01 Bratislava</li>
-						<li>Slovensko</li>
-						<li class="mt-2">Tel: +421 900 123 456</li>
-						<li>Email: info@kvetinarstvo.sk</li>
-					</ul>
-				</div>
-
-				<!-- info -->
-				<div class="col-md-4">
-					<a href="about_us.html" class="text-decoration-none text-dark d-block">
-						<h6 class="fw-bold">Informácie</h6>
-					</a>
-					<ul class="list-unstyled small text-muted">
-						<li>IČO: 12345678</li>
-						<li>DIČ: 2023456789</li>
-						<li>Otváracie hodiny: Po–Pi 8:00 – 18:00</li>
-						<li>So 9:00 – 14:00</li>
-						<li class="mt-2">Doručenie v rámci SR</li>
-					</ul>
-				</div>
-
-			</div>
-
-			<hr class="my-4">
-
-			<div class="text-center small text-muted">
-				Navrhnuté pre demo účely • Obsahuje vymyslené údaje
-			</div>
-		</div>
-	</footer>
+        <div class="container">
+            <div class="row text-start">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <a href="{{ url('/about') }}" class="text-decoration-none text-dark d-block">
+                        <h6 class="fw-bold">Kvetinárstvo.sk</h6>
+                    </a>
+                    <p class="text-muted small mb-2">Prinášame čerstvé kvety pre každú príležitosť. Rýchle doručenie, kvalitné aranžmány a spokojní zákazníci.</p>
+                    <a href="{{ url('/about') }}" class="text-decoration-none small fw-medium text-dark">O nás →</a>
+                    <p class="text-muted small mb-0">© 2026 Kvetinarstvo.sk</p>
+                </div>
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h6 class="fw-bold">Kontakt</h6>
+                    <ul class="list-unstyled small text-muted">
+                        <li>Hlavná 123</li>
+                        <li>811 01 Bratislava, Slovensko</li>
+                        <li class="mt-2">Tel: +421 900 123 456</li>
+                        <li>Email: info@kvetinarstvo.sk</li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h6 class="fw-bold">Informácie</h6>
+                    <ul class="list-unstyled small text-muted">
+                        <li>IČO: 12345678</li>
+                        <li>DIČ: 2023456789</li>
+                        <li>Otváracie hodiny: Po–Pi 8:00 – 18:00</li>
+                        <li>So 9:00 – 14:00</li>
+                        <li class="mt-2">Doručenie v rámci SR</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center small text-muted">Navrhnuté pre demo účely • Obsahuje vymyslené údaje</div>
+        </div>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
