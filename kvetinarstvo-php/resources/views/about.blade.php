@@ -31,7 +31,7 @@
             <div class="d-flex align-items-center">
                 <a href="{{ url('/') }}" class="d-flex align-items-center text-decoration-none me-auto">
                     <span class="logo-placeholder text-danger">LOGO</span>
-                    <span class="ms-3 fw-bold fs-4 text-dark">kvetinarstvo.sk</span>
+                    <span class="ms-3 fw-bold fs-4 text-dark d-none d-sm-flex">kvetinarstvo.sk</span>
                 </a>
                 <form class="flex-grow-1 mx-4 d-none d-lg-flex">
                     <div class="input-group">

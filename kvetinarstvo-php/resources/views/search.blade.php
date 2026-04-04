@@ -12,60 +12,22 @@
 
     <style>
         /* TODO ak bude moc css, presunut do style.css */
-        .logo-placeholder {
-            font-size: 1.8rem;
-            font-weight: 900;
+        .logo-placeholder { font-size: 1.8rem; font-weight: 900; }
+        .product-img { aspect-ratio: 3/2; width: 100%; object-fit: cover; }
+        .filter-sidebar { background: #f8f9fa; border: 1px solid #dee2e6;
+            border-radius: 0.375rem; padding: 1.5rem;
         }
-
-        .product-img {
-            width: 100%;
-            height: 220px;
-            object-fit: cover;
-            background: #f8f9fa;
+        .search-bar { background: #e9ecef; padding: 0.75rem; }
+		.sort-container { display: flex; flex-direction: row; position: relative; }
+        .sort-options { display: none;
+            position: absolute;top: 100%; right: 0; background: white;
+            border: 1px solid #dee2e6; border-radius: 0.375rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1000;
+            min-width: 200px; padding: 0.5rem 0;
         }
-
-        .filter-sidebar {
-            background: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 0.375rem;
-            padding: 1.5rem;
-        }
-
-        .search-bar {
-            background: #e9ecef;
-            padding: 0.75rem;
-        }
-
-		.sort-container {
-            position: relative;
-        }
-
-        .sort-options {
-            display: none;
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background: white;
-            border: 1px solid #dee2e6;
-            border-radius: 0.375rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            z-index: 1000;
-            min-width: 200px;
-            padding: 0.5rem 0;
-        }
-
-        .sort-btn:checked ~ .sort-options {
-            display: block;
-        }
-
-        .sort-option {
-            padding: 0.5rem 1rem;
-            cursor: pointer;
-        }
-
-        .sort-option:hover {
-            background-color: #f8f9fa;
-        }
+        .sort-btn:checked ~ .sort-options { display: block; }
+        .sort-option { padding: 0.5rem 1rem; cursor: pointer; }
+        .sort-option:hover { background-color: #f8f9fa; }
     </style>
 </head>
 <body class="bg-white d-flex flex-column min-vh-100">
@@ -76,7 +38,7 @@
                     <div class="d-flex align-items-center">
                         <a href="{{ url('/') }}" class="d-flex align-items-center text-decoration-none me-auto">
                             <span class="logo-placeholder text-danger">LOGO</span>
-                            <span class="ms-3 fw-bold fs-4 text-dark">kvetinarstvo.sk</span>
+                            <span class="ms-3 fw-bold fs-4 text-dark d-none d-sm-flex">kvetinarstvo.sk</span>
                         </a>
                         <form class="flex-grow-1 mx-4 d-none d-lg-flex">
                             <div class="input-group">
@@ -124,7 +86,7 @@
         <div class="container py-5">
             <div class="row g-5">
                 <!-- LEFT – Filtrovanie -->
-                <div class="col-lg-3">
+                <div class="col-lg-3 collapse d-lg-block" id="filterCollapse">
                     <div class="filter-sidebar sticky-top" style="top: 20px;">
                         <h5 class="mb-4 fw-bold">Filtrovanie</h5>
 
@@ -230,6 +192,11 @@
                                 <div class="sort-option">Od najdrahšieho</div>
                                 <div class="sort-option">Názov A – Z</div>
                                 <div class="sort-option">Názov Z – A</div>
+                            </div>
+                              <div class="d-lg-none ms-3 text-end w-100">
+                                <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#filterCollapse">
+                                    <i class="bi bi-funnel"></i> Filtre
+                                </button>
                             </div>
                         </div>
                     </div>

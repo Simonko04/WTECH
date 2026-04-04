@@ -16,13 +16,14 @@
             display: flex; align-items: center; justify-content: center;
             text-align: center; color: white;
         }
-        .bundle-img { width: 100%; height: 130px; object-fit: cover; }
-        .product-img { width: 100%; height: 220px; object-fit: cover; }
+        .bundle-img { aspect-ratio: 7/5; width: 100%; object-fit: cover; }
+        .product-img { aspect-ratio: 3/2; width: 100%; object-fit: cover; }
         .section-title { position: relative; display: inline-block; }
         .section-title:after {
             content: ''; position: absolute; width: 60%; height: 3px;
             background: #dc3545; bottom: -6px; left: 20%;
         }
+        .card-img-top{aspect-ratio: 25/16; object-fit: cover; width: 100%;}
     </style>
 </head>
 <body class="bg-white d-flex flex-column min-vh-100">
@@ -32,7 +33,7 @@
         <div class="d-flex align-items-center">
             <a href="{{ url('/') }}" class="d-flex align-items-center text-decoration-none me-auto">
                 <span class="logo-placeholder text-danger">LOGO</span>
-                <span class="ms-3 fw-bold fs-4 text-dark">kvetinarstvo.sk</span>
+                <span class="ms-3 fw-bold fs-4 text-dark d-none d-sm-flex">kvetinarstvo.sk</span>
             </a>
             <form class="flex-grow-1 mx-4 d-none d-lg-flex">
                 <div class="input-group">
@@ -103,7 +104,7 @@
             <div class="col-6 col-md-3">
                 <a href="{{ url('/search') }}" class="text-decoration-none">
                     <div class="card h-100 border-0 shadow-sm">
-                        <img src="{{ asset('img/romantic.jpg') }}" class="card-img-top" style="height: 160px; object-fit: cover;" alt="Romantika">
+                        <img src="{{ asset('img/romantic.jpg') }}" class="card-img-top" alt="Romantika">
                         <div class="card-body"><h6 class="fw-medium">Romantika & Narodeniny</h6></div>
                     </div>
                 </a>
@@ -111,7 +112,7 @@
             <div class="col-6 col-md-3">
                 <a href="{{ url('/search') }}" class="text-decoration-none">
                     <div class="card h-100 border-0 shadow-sm">
-                        <img src="{{ asset('img/wedding.jpg') }}" class="card-img-top" style="height: 160px; object-fit: cover;" alt="Svadba">
+                        <img src="{{ asset('img/wedding.jpg') }}" class="card-img-top" alt="Svadba">
                         <div class="card-body"><h6 class="fw-medium">Svadby & Oslavy</h6></div>
                     </div>
                 </a>
@@ -119,7 +120,7 @@
             <div class="col-6 col-md-3">
                 <a href="{{ url('/search') }}" class="text-decoration-none">
                     <div class="card h-100 border-0 shadow-sm">
-                        <img src="{{ asset('img/sympathy.jpg') }}" class="card-img-top" style="height: 160px; object-fit: cover;" alt="Sústrasť">
+                        <img src="{{ asset('img/sympathy.jpg') }}" class="card-img-top" alt="Sústrasť">
                         <div class="card-body"><h6 class="fw-medium">Sústrasť</h6></div>
                     </div>
                 </a>
@@ -127,7 +128,7 @@
             <div class="col-6 col-md-3">
                 <a href="{{ url('/search') }}" class="text-decoration-none">
                     <div class="card h-100 border-0 shadow-sm">
-                        <img src="{{ asset('img/corporate.jpg') }}" class="card-img-top" style="height: 160px; object-fit: cover;" alt="Firemné">
+                        <img src="{{ asset('img/corporate.jpg') }}" class="card-img-top" alt="Firemné">
                         <div class="card-body"><h6 class="fw-medium">Firemné darčeky</h6></div>
                     </div>
                 </a>
