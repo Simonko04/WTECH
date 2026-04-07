@@ -18,7 +18,8 @@
             border-radius: 0.375rem; padding: 1.5rem;
         }
         .search-bar { background: #e9ecef; padding: 0.75rem; }
-		.sort-container { display: flex; flex-direction: row; position: relative; }
+		.sort-container { display: flex; flex-direction: column; position: relative; }
+        @media (min-width: 576px){ .sort-container {  flex-direction: row; }}
         .sort-options { display: none;
             position: absolute;top: 100%; right: 0; background: white;
             border: 1px solid #dee2e6; border-radius: 0.375rem;
@@ -40,12 +41,6 @@
                             <span class="logo-placeholder text-danger">LOGO</span>
                             <span class="ms-3 fw-bold fs-4 text-dark d-none d-sm-flex">kvetinarstvo.sk</span>
                         </a>
-                        <form class="flex-grow-1 mx-4 d-none d-lg-flex">
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Search" aria-label="Search">
-                                <button class="btn btn-outline-secondary" type="button"><i class="bi bi-search"></i></button>
-                            </div>
-                        </form>
                         <div class="d-flex gap-4 align-items-center">
                             <a href="{{ url('/wishlist') }}" class="text-dark"><i class="bi bi-heart fs-3"></i></a>
                             @auth
@@ -193,7 +188,7 @@
                                 <div class="sort-option">Názov A – Z</div>
                                 <div class="sort-option">Názov Z – A</div>
                             </div>
-                              <div class="d-lg-none ms-3 text-end w-100">
+                              <div class="d-lg-none ms-0 ms-sm-3 text-end w-100">
                                 <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#filterCollapse">
                                     <i class="bi bi-funnel"></i> Filtre
                                 </button>
