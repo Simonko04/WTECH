@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KVETY - Detail produktu</title>
+    <title>KVETY - {{ $product->name }}</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
@@ -135,30 +135,25 @@
                     <div class="bg-white border border-secondary overflow-hidden d-flex align-items-center justify-content-center shadow-sm mx-auto"
                          style="max-width: 25rem; aspect-ratio: 1/1;">
                         <img id="main-image"
-                             src="img/kvet.jpg"
-                             alt="Fotografia produktu - Karafiát biely"
+                             src="{{ asset($product->images->first()->path) }}"
+                             alt="Fotografia produktu - {{ $product->name }}"
                              class="w-100 h-100 object-fit-cover">
                     </div>
                     <figcaption id="main-flower-name" class="bg-secondary bg-opacity-25 px-4 py-2 fs-5 fw-medium d-inline-block mt-3 rounded">
-                        Karafiát biely – kytica
+                        {{ $product->name }}
                     </figcaption>
                 </figure>
 
                 <!-- Thumbnaily - ďalšie fotografie produktu -->
                 <div class="d-flex gap-2 justify-content-center flex-wrap" aria-label="Ďalšie fotografie produktu">
-                    <button type="button" class="thumbnail-wrapper active p-0" aria-label="Náhľad 1">
-                        <img src="img/kvet.jpg" alt="Fotografia produktu 1" class="w-100 h-100 object-fit-cover">
-                    </button>
-                    <button type="button" class="thumbnail-wrapper p-0" aria-label="Náhľad 2">
-                        <img src="img/cactus_2.jpg" alt="Fotografia produktu 2" class="w-100 h-100 object-fit-cover">
-                    </button>
-                    <button type="button" class="thumbnail-wrapper p-0" aria-label="Náhľad 3">
-                        <img src="img/cactus_2.jpg" alt="Fotografia produktu 3" class="w-100 h-100 object-fit-cover">
-                    </button>
-                    <button type="button" class="thumbnail-wrapper p-0" aria-label="Náhľad 4">
-                        <img src="img/cactus_2.jpg" alt="Fotografia produktu 4" class="w-100 h-100 object-fit-cover">
-                    </button>
+                    @foreach($product->images as $index => $image)
+                        <button type="button" class="thumbnail-wrapper {{ $index === 0 ? 'active' : '' }} p-0" aria-label="Náhľad {{ $index + 1 }}">
+                            <img src="{{ asset($image->path) }}" alt="Fotografia produktu {{ $index + 1 }}" class="w-100 h-100 object-fit-cover">
+                        </button>
+                    @endforeach
                 </div>
+
+
 
             </div>
         </div>
@@ -169,7 +164,7 @@
             <!-- Cena + ovládacie prvky -->
             <div class="d-flex align-items-center justify-content-between flex-wrap gap-3 mb-4">
                 <p id="main-price" class="bg-secondary bg-opacity-25 px-4 py-2 fs-5 fw-bold d-inline-block shadow-sm m-0 rounded">
-                    14.52€
+                    {{ $product->price }}€
                 </p>
 
                 <div class="d-flex align-items-center gap-3 gap-md-4">
@@ -196,9 +191,7 @@
             <!-- Krátky popis -->
             <div class="bg-light p-4 rounded flex-grow-1 d-flex align-items-center justify-content-center text-center shadow-sm">
                 <p id="short-description" class="fs-5 fw-light m-0">
-                    Nádherná kytica bielych karafiátov, ktorá zaručene poteší vašich blízkych.
-                    Kvety sú vždy čerstvé, starostlivo aranžované našimi floristami a doručované
-                    s maximálnou opatrnosťou pre zachovanie ich krásy.
+                    {{ $product->short_description }}
                 </p>
             </div>
 
@@ -211,11 +204,7 @@
             <div class="bg-light p-5 rounded shadow-sm">
                 <h2 class="h5 fw-semibold mb-3">Detailný popis</h2>
                 <p id="full-description" class="fs-5 fw-light m-0">
-                    Biele karafiáty symbolizujú čistotu, šťastie a úprimnú lásku. Táto exkluzívna
-                    kytica sa skladá z prémiových kvetov dovezených priamo od lokálnych pestovateľov.
-                    Vďaka ich vysokej trvácnosti vám pri správnej starostlivosti (pravidelná výmena vody
-                    a zastrihávanie stoniek) vydržia vo váze svieže až dva týždne. Kytica je dodávaná
-                    v elegantnom balení s možnosťou pridať osobné venovanie.
+                    {{ $product->full_description }}
                 </p>
             </div>
         </div>
@@ -226,37 +215,19 @@
         <h2 class="h5 fw-semibold mb-4">Mohlo by vás zaujímať</h2>
 
         <div class="row g-4 justify-content-center" id="related-row">
-
-            <div class="col-6 col-md-4 col-lg-3">
-                <div class="card h-100 border-0 shadow">
-                    <img src="./img/rose.jpg" alt="Rose Elegance" class="product-img">
-                    <div class="card-body text-center p-3">
-                        <p class="mb-1 fw-medium">Rose Elegance</p>
-                        <p class="text-muted mb-0">12.99€</p>
-                    </div>
+            @foreach($relatedProducts as $related)
+                <div class="col-6 col-md-4 col-lg-3">
+                    <a href="{{ route('product.show', $related->slug) }}" class="text-decoration-none text-dark">
+                        <div class="card h-100 border-0 shadow recommendation-card">
+                            <img src="{{ asset($related->images->first()->path) }}" alt="{{ $related->name }}" class="product-img">
+                            <div class="card-body text-center p-3">
+                                <p class="mb-1 fw-medium">{{ $related->name }}</p>
+                                <p class="text-muted mb-0">{{ $related->price }}€</p>
+                            </div>
+                        </div>
+                    </a>
                 </div>
-            </div>
-
-            <div class="col-6 col-md-4 col-lg-3">
-                <div class="card h-100 border-0 shadow">
-                    <img src="./img/orchid.jpg" alt="Orchid Grace" class="product-img">
-                    <div class="card-body text-center p-3">
-                        <p class="mb-1 fw-medium">Orchid Grace</p>
-                        <p class="text-muted mb-0">18.75€</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-6 col-md-4 col-lg-3">
-                <div class="card h-100 border-0 shadow">
-                    <img src="./img/lily.jpg" alt="Lily Serenity" class="product-img">
-                    <div class="card-body text-center p-3">
-                        <p class="mb-1 fw-medium">Lily Serenity</p>
-                        <p class="text-muted mb-0">13.80€</p>
-                    </div>
-                </div>
-            </div>
-
+            @endforeach
         </div>
     </section>
 
@@ -300,4 +271,16 @@
     </footer>
 
 </body>
+
+<script>
+    document.querySelectorAll('.thumbnail-wrapper').forEach(button => {
+        button.addEventListener('click', function () {
+            const img = this.querySelector('img');
+            document.getElementById('main-image').src = img.src;
+            document.querySelectorAll('.thumbnail-wrapper').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+</script>
+
 </html>

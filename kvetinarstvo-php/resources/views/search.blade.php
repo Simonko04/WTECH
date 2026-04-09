@@ -51,14 +51,6 @@
                             <a href="{{ url('/cart') }}" class="text-dark"><i class="bi bi-cart fs-3"></i></a>
                         </div>
                     </div>
-                    <div class="mt-3 d-lg-none">
-                        <form>
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Search" aria-label="Search">
-                                <button class="btn btn-outline-secondary" type="button"><i class="bi bi-search"></i></button>
-                            </div>
-                        </form>
-                    </div>
                 </div>
             </header>
 
