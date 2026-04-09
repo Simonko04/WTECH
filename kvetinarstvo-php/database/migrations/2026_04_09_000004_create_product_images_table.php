@@ -12,7 +12,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('product_id')->constrained('products');
             $table->string('path', 255);
-            $table->boolean('is_primary')->default(false);
             $table->timestamps();
         });
     }
