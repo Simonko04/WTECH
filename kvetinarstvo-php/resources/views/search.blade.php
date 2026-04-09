@@ -74,91 +74,78 @@
             <div class="row g-5">
                 <!-- LEFT – Filtrovanie -->
                 <div class="col-lg-3 collapse d-lg-block" id="filterCollapse">
-                    <div class="filter-sidebar sticky-top" style="top: 20px;">
-                        <h5 class="mb-4 fw-bold">Filtrovanie</h5>
+                    <form method="GET" action="{{ url('/search') }}" id="filter-form">
+                        <div class="filter-sidebar sticky-top" style="top: 20px;">
+                            <h5 class="mb-4 fw-bold">Filtrovanie</h5>
 
-						 <!-- Kategorie kvetov -->
-                        <div class="mb-5">
-                            <h6 class="mb-3 text-muted fw-medium">Kategorie</h6>
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="checkbox" id="romantika_narodeniny">
-                                <label class="form-check-label" for="romantika_narodeniny">Romantika & Narodeniny</label>
+                            <!-- Hidden sort input -->
+                            <input type="hidden" name="sort" id="sort-input" value="{{ request('sort') }}">
+
+                            <!-- Kategorie kvetov -->
+                            <div class="mb-5">
+                                <h6 class="mb-3 text-muted fw-medium">Kategórie</h6>
+                                @foreach($categories as $category)
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input" type="checkbox" id="cat-{{ $category->id }}"
+                                            name="category[]" value="{{ $category->id }}"
+                                            {{ in_array($category->id, request('category', [])) ? 'checked' : '' }}
+                                            onchange="this.form.submit()">
+                                        <label class="form-check-label" for="cat-{{ $category->id }}">{{ $category->name }}</label>
+                                    </div>
+                                @endforeach
                             </div>
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="checkbox" id="svadby_oslavy">
-                                <label class="form-check-label" for="svadby_oslavy">Svadby & Oslavy</label>
-                            </div>
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="checkbox" id="sustrast">
-                                <label class="form-check-label" for="sustrast">Sústrasť</label>
-                            </div>
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="checkbox" id="firemne_darceky">
-                                <label class="form-check-label" for="firemne_darceky">Firemné darčeky</label>
-                            </div>
-                        </div>
 
 
-                        <!-- Typy kvetov -->
-                        <div class="mb-5">
-                            <h6 class="mb-3 text-muted fw-medium">Typy kvetov</h6>
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="checkbox" id="ruze" checked>
-                                <label class="form-check-label" for="ruze">Ruže</label>
+                            <!-- Typy kvetov -->
+                            <div class="mb-5">
+                                <h6 class="mb-3 text-muted fw-medium">Farba</h6>
+                                @foreach($colors as $color)
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input" type="checkbox" id="color-{{ $color->id }}"
+                                            name="color[]" value="{{ $color->id }}"
+                                            {{ in_array($color->id, (array) request('color', [])) ? 'checked' : '' }}
+                                            onchange="this.form.submit()">
+                                        <label class="form-check-label" for="color-{{ $color->id }}">{{ $color->name }}</label>
+                                    </div>
+                                @endforeach
                             </div>
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="checkbox" id="tulipany">
-                                <label class="form-check-label" for="tulipany">Tulipány</label>
-                            </div>
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="checkbox" id="orchidey">
-                                <label class="form-check-label" for="orchidey">Orchidey</label>
-                            </div>
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="checkbox" id="lilie">
-                                <label class="form-check-label" for="lilie">Lilie</label>
-                            </div>
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="checkbox" id="gerbera">
-                                <label class="form-check-label" for="gerbera">Gerbera</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="sunflowers">
-                                <label class="form-check-label" for="sunflowers">Slnečnice</label>
-                            </div>
-                        </div>
 
-                        <!-- Cenové rozpätie -->
-                        <div class="mb-5">
-                            <h6 class="mb-3 text-muted fw-medium">Cenové rozpätie</h6>
-                            <div class="row g-2">
-                                <div class="col-6">
-                                    <label class="form-label small text-muted">Od</label>
-                                    <input type="number" class="form-control" value="0" min="0">
+                            <!-- Cenové rozpätie -->
+                            <div class="mb-5">
+                                <h6 class="mb-3 text-muted fw-medium">Cenové rozpätie</h6>
+                                <div class="row g-2">
+                                    <div class="col-6">
+                                        <label class="form-label small text-muted">Od</label>
+                                        <input type="number" class="form-control" name="price_from" value="{{ request('price_from') }}" min="0" step="0.01">
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="form-label small text-muted">Do</label>
+                                        <input type="number" class="form-control" name="price_to" value="{{ request('price_to') }}" min="0" step="0.01">
+                                    </div>
                                 </div>
-                                <div class="col-6">
-                                    <label class="form-label small text-muted">Do</label>
-                                    <input type="number" class="form-control" value="50" min="0">
+                                <button type="submit" class="btn btn-outline-secondary btn-sm mt-3 w-100">Použiť cenu</button>
+                            </div>
+
+                            <!-- Ostatné -->
+                            <div>
+                                <h6 class="mb-3 text-muted fw-medium">Ostatné</h6>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" id="sklad" checked>
+                                    <label class="form-check-label" for="sklad">Na sklade</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="doprava">
+                                    <label class="form-check-label" for="doprava">Doprava zadarmo</label>
                                 </div>
                             </div>
-                            <div class="mt-3">
-                                <input type="range" class="form-range" min="0" max="100" value="50">
-                            </div>
-                        </div>
 
-                        <!-- Ostatné -->
-                        <div>
-                            <h6 class="mb-3 text-muted fw-medium">Ostatné</h6>
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="checkbox" id="sklad" checked>
-                                <label class="form-check-label" for="sklad">Na sklade</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="doprava">
-                                <label class="form-check-label" for="doprava">Doprava zadarmo</label>
-                            </div>
+                            <!-- Clear -->
+                            @if(request()->hasAny(['category', 'color', 'price_from', 'price_to', 'sort']))
+                                <a href="{{ url('/search') }}" class="btn btn-outline-secondary btn-sm mt-4 w-100">Zrušiť filtre</a>
+                            @endif
+
                         </div>
-                    </div>
+                    </form>
                 </div>
 
                 <!-- RIGHT – Produkty -->
@@ -175,11 +162,12 @@
                             <input type="checkbox" id="sort-toggle" class="sort-btn d-none">
 
                             <div class="sort-options">
-                                <div class="sort-option">Od najlacnejšieho</div>
-                                <div class="sort-option">Od najdrahšieho</div>
-                                <div class="sort-option">Názov A – Z</div>
-                                <div class="sort-option">Názov Z – A</div>
+                                <div class="sort-option" onclick="document.getElementById('sort-input').value='price_asc';  document.getElementById('filter-form').submit();">Od najlacnejšieho</div>
+                                <div class="sort-option" onclick="document.getElementById('sort-input').value='price_desc'; document.getElementById('filter-form').submit();">Od najdrahšieho</div>
+                                <div class="sort-option" onclick="document.getElementById('sort-input').value='name_asc';   document.getElementById('filter-form').submit();">Názov A – Z</div>
+                                <div class="sort-option" onclick="document.getElementById('sort-input').value='name_desc';  document.getElementById('filter-form').submit();">Názov Z – A</div>
                             </div>
+                            
                               <div class="d-lg-none ms-0 ms-sm-3 text-end w-100">
                                 <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#filterCollapse">
                                     <i class="bi bi-funnel"></i> Filtre
@@ -189,96 +177,19 @@
                     </div>
 
                     <div class="row g-4">
-                        <!-- Product 1 -->
-                        <div class="col-6 col-md-4 col-lg-4">
-                            <div class="card h-100 border-0 shadow">
-                                <img src="./img/rose.jpg" alt="Rose Elegance" class="product-img">
-                                <div class="card-body text-center p-3">
-                                    <p class="mb-1 fw-medium">Rose Elegance</p>
-                                    <p class="text-muted mb-0">12.99€</p>
-                                </div>
+                        @foreach($products as $product)
+                            <div class="col-6 col-md-4 col-lg-4">
+                                <a href="{{ route('product.show', $product->slug) }}" class="text-decoration-none text-dark">
+                                    <div class="card h-100 border-0 shadow">
+                                        <img src="{{ asset($product->images->first()->path) }}" alt="{{ $product->name }}" class="product-img">
+                                        <div class="card-body text-center p-3">
+                                            <p class="mb-1 fw-medium">{{ $product->name }}</p>
+                                            <p class="text-muted mb-0">{{ $product->price }}€</p>
+                                        </div>
+                                    </div>
+                                </a>
                             </div>
-                        </div>
-                        <!-- Product 2 -->
-                        <div class="col-6 col-md-4 col-lg-4">
-                            <div class="card h-100 border-0 shadow">
-                                <img src="./img/tulip.jpg" alt="Sunny Tulip" class="product-img">
-                                <div class="card-body text-center p-3">
-                                    <p class="mb-1 fw-medium">Sunny Tulip</p>
-                                    <p class="text-muted mb-0">9.49€</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Product 3 -->
-                        <div class="col-6 col-md-4 col-lg-4">
-                            <div class="card h-100 border-0 shadow">
-                                <img src="./img/laven.jpg" alt="Lavender Bliss" class="product-img">
-                                <div class="card-body text-center p-3">
-                                    <p class="mb-1 fw-medium">Lavender Bliss</p>
-                                    <p class="text-muted mb-0">11.20€</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Product 4 -->
-                        <div class="col-6 col-md-4 col-lg-4">
-                            <div class="card h-100 border-0 shadow">
-                                <img src="./img/orchid.jpg" alt="Orchid Grace" class="product-img">
-                                <div class="card-body text-center p-3">
-                                    <p class="mb-1 fw-medium">Orchid Grace</p>
-                                    <p class="text-muted mb-0">18.75€</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Product 5 -->
-                        <div class="col-6 col-md-4 col-lg-4">
-                            <div class="card h-100 border-0 shadow">
-                                <img src="./img/pheon.jpg" alt="Peony Charm" class="product-img">
-                                <div class="card-body text-center p-3">
-                                    <p class="mb-1 fw-medium">Peony Charm</p>
-                                    <p class="text-muted mb-0">14.30€</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Product 6 -->
-                        <div class="col-6 col-md-4 col-lg-4">
-                            <div class="card h-100 border-0 shadow">
-                                <img src="./img/daisy.jpg" alt="Daisy Fresh" class="product-img">
-                                <div class="card-body text-center p-3">
-                                    <p class="mb-1 fw-medium">Daisy Fresh</p>
-                                    <p class="text-muted mb-0">7.99€</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Product 7 -->
-                        <div class="col-6 col-md-4 col-lg-4">
-                            <div class="card h-100 border-0 shadow">
-                                <img src="./img/sunflower.jpg" alt="Sunflower Joy" class="product-img">
-                                <div class="card-body text-center p-3">
-                                    <p class="mb-1 fw-medium">Sunflower Joy</p>
-                                    <p class="text-muted mb-0">10.50€</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Product 8 -->
-                        <div class="col-6 col-md-4 col-lg-4">
-                            <div class="card h-100 border-0 shadow">
-                                <img src="./img/lily.jpg" alt="Lily Serenity" class="product-img">
-                                <div class="card-body text-center p-3">
-                                    <p class="mb-1 fw-medium">Lily Serenity</p>
-                                    <p class="text-muted mb-0">13.80€</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Product 9 -->
-                        <div class="col-6 col-md-4 col-lg-4">
-                            <div class="card h-100 border-0 shadow">
-                                <img src="./img/geranium.jpg" alt="Geranium Glow" class="product-img">
-                                <div class="card-body text-center p-3">
-                                    <p class="mb-1 fw-medium">Geranium Glow</p>
-                                    <p class="text-muted mb-0">8.75€</p>
-                                </div>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
 
                     <!-- Pagination -->

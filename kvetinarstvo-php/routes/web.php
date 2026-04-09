@@ -10,7 +10,7 @@ Route::get('/cart', function () { return view('cart'); });
 Route::get('/checkout', function () { return view('checkout'); });
 Route::get('/history', function () { return view('history'); });
 Route::get('/product/{slug}', [ProductController::class, 'show'])->name('product.show');
-Route::get('/search', function () { return view('search'); });
+Route::get('/search', [ProductController::class, 'index'])->name('search');
 Route::get('/wishlist', function () { return view('wishlist'); });
 
 Route::get('/dashboard', function () {
