@@ -3,10 +3,14 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CartController;
 
 Route::get('/', function () { return view('home'); });
 Route::get('/about', function () { return view('about'); });
-Route::get('/cart', function () { return view('cart'); });
+Route::get('/cart',           [CartController::class, 'index'])->name('cart.index');
+Route::post('/cart/add',      [CartController::class, 'add'])->name('cart.add');
+Route::post('/cart/update',   [CartController::class, 'update'])->name('cart.update');
+Route::post('/cart/remove',   [CartController::class, 'remove'])->name('cart.remove');
 Route::get('/checkout', function () { return view('checkout'); });
 Route::get('/history', function () { return view('history'); });
 Route::get('/product/{slug}', [ProductController::class, 'show'])->name('product.show');

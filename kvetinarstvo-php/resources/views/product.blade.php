@@ -123,6 +123,20 @@
 
 <main class="container py-5 flex-grow-1">
 
+    @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Zavrieť"></button>
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Zavrieť"></button>
+            </div>
+        @endif
+
     <!-- Horná sekcia: galéria + akcie -->
     <section class="row g-4 align-items-stretch" aria-label="Detail produktu">
 
@@ -177,9 +191,14 @@
                     </div>
 
                     <!-- Pridať do košíka -->
-                    <a href="#" class="text-dark interaction-icon" aria-label="Pridať do košíka" role="button">
-                        <i class="bi bi-cart-plus fs-3"></i>
-                    </a>
+                    <form method="POST" action="{{ route('cart.add') }}">
+                        @csrf
+                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                        <input type="hidden" name="quantity" id="cart-quantity-input" value="1">
+                        <button type="submit" class="text-dark interaction-icon border-0 bg-transparent p-0" aria-label="Pridať do košíka">
+                            <i class="bi bi-cart-plus fs-3"></i>
+                        </button>
+                    </form>
 
                     <!-- Pridať do wishlistu -->
                     <a href="#" class="text-dark interaction-icon" aria-label="Pridať do obľúbených" role="button">
@@ -280,6 +299,25 @@
             document.querySelectorAll('.thumbnail-wrapper').forEach(b => b.classList.remove('active'));
             this.classList.add('active');
         });
+    });
+
+    const qtyDisplay = document.getElementById('main-quantity');
+    const qtyInput   = document.getElementById('cart-quantity-input');
+
+    document.querySelector('[aria-label="Zvýšiť množstvo"]').addEventListener('click', () => {
+        qtyDisplay.value = parseInt(qtyDisplay.value) + 1;
+        qtyInput.value   = qtyDisplay.value;
+    });
+
+    document.querySelector('[aria-label="Znížiť množstvo"]').addEventListener('click', () => {
+        if (parseInt(qtyDisplay.value) > 1) {
+            qtyDisplay.value = parseInt(qtyDisplay.value) - 1;
+            qtyInput.value   = qtyDisplay.value;
+        }
+    });
+
+    qtyDisplay.addEventListener('input', () => {
+        qtyInput.value = qtyDisplay.value;
     });
 </script>
 

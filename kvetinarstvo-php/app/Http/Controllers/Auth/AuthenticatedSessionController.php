@@ -28,6 +28,8 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        $this->mergeSessionCartToDb();
+
         return redirect()->intended(url('/'));
     }
 
@@ -43,5 +45,22 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
+    }
+
+    private function mergeSessionCartToDb(): void
+    {
+        $sessionCart = session()->get('cart', []);
+        if (empty($sessionCart)) return;
+
+        foreach ($sessionCart as $productId => $item) {
+            $cartItem = \App\Models\Cart::firstOrNew([
+                'user_id'    => Auth::id(),
+                'product_id' => $productId,
+            ]);
+            $cartItem->quantity = ($cartItem->exists ? $cartItem->quantity : 0) + $item['quantity'];
+            $cartItem->save();
+        }
+
+        session()->forget('cart');
     }
 }
