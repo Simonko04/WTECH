@@ -47,7 +47,7 @@ class ProductController extends Controller
             }
         }
 
-        $products = $query->get();
+        $products = $query->paginate(9)->withQueryString();
         $categories = \App\Models\Category::all();
         $colors = \App\Models\Color::all();
 
