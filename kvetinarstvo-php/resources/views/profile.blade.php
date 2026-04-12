@@ -80,7 +80,7 @@
                 </p>
 
                 <div class="d-flex justify-content-center gap-3 mt-auto pt-3">
-                    <a href="{{ url('/history') }}" class="action-button bg-secondary bg-opacity-25 border-0 px-4 py-2 rounded shadow-sm text-dark text-decoration-none">
+                    <a href="{{ route('orders.index') }}" class="action-button bg-secondary bg-opacity-25 border-0 px-4 py-2 rounded shadow-sm text-dark text-decoration-none">
                         order history
                     </a>
                     <a href="{{ url('/wishlist') }}" class="action-button bg-secondary bg-opacity-25 border-0 px-4 py-2 rounded shadow-sm text-dark text-decoration-none">
