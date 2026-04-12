@@ -6,9 +6,11 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PageController;
 
-Route::get('/', function () { return view('home'); });
+Route::get('/', [PageController::class, 'home']);
 Route::get('/about', function () { return view('about'); });
+Route::post('/cart/add-bundle', [CartController::class, 'addBundle'])->name('cart.addBundle');
 
 // Cart
 Route::get('/cart',         [CartController::class, 'index'])->name('cart.index');

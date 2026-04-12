@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
 
 class CartController extends Controller
 {
@@ -135,5 +136,32 @@ class CartController extends Controller
         }
 
         return redirect()->route('cart.index');
+    }
+
+    public function addBundle(Request $request): RedirectResponse
+    {
+        $ids = [$request->product1_id, $request->product2_id];
+
+        foreach ($ids as $productId) {
+            if (Auth::check()) {
+                $item = \App\Models\Cart::firstOrNew([
+                    'user_id'    => Auth::id(),
+                    'product_id' => $productId,
+                ]);
+                $item->quantity = ($item->exists ? $item->quantity : 0) + 1;
+                $item->save();
+            } else {
+                $cart = session()->get('cart', []);
+                if (isset($cart[$productId])) {
+                    $cart[$productId]['quantity'] += 1;
+                } else {
+                    $product = \App\Models\Product::find($productId);
+                    $cart[$productId] = ['quantity' => 1, 'price' => $product->price];
+                }
+                session()->put('cart', $cart);
+            }
+        }
+
+        return redirect()->back()->with('bundle_success', 'Oba produkty boli pridané do košíka!');
     }
 }

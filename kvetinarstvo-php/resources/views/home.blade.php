@@ -23,7 +23,9 @@
             content: ''; position: absolute; width: 60%; height: 3px;
             background: #dc3545; bottom: -6px; left: 20%;
         }
-        .card-img-top{aspect-ratio: 25/16; object-fit: cover; width: 100%;}
+        .card-img-top { aspect-ratio: 25/16; object-fit: cover; width: 100%; }
+        .bundle-card { cursor: pointer; transition: box-shadow 0.2s; }
+        .bundle-card:hover { box-shadow: 0 0.5rem 1.5rem rgba(0,0,0,0.2) !important; }
     </style>
 </head>
 <body class="bg-white d-flex flex-column min-vh-100">
@@ -139,95 +141,99 @@
     <div class="container pb-5" id="produkty">
         <h2 class="text-center mb-4 section-title">Odporúčame dnes</h2>
         <div class="row g-4">
-            <div class="col-6 col-md-4 col-lg-3">
-                <div class="card h-100 border-0 shadow">
-                    <img src="{{ asset('img/rose.jpg') }}" alt="Rose Elegance" class="product-img">
-                    <div class="card-body text-center p-3">
-                        <p class="mb-1 fw-medium">Rose Elegance</p>
-                        <p class="text-muted mb-0">12.99€</p>
-                    </div>
+            @foreach($products as $product)
+                <div class="col-6 col-md-4 col-lg-3">
+                    <a href="{{ route('product.show', $product->slug) }}" class="text-decoration-none text-dark">
+                        <div class="card h-100 border-0 shadow">
+                            <img src="{{ asset($product->images->first()->path ?? 'img/placeholder.jpg') }}"
+                                 alt="{{ $product->name }}"
+                                 class="product-img">
+                            <div class="card-body text-center p-3">
+                                <p class="mb-1 fw-medium">{{ $product->name }}</p>
+                                <p class="text-muted mb-0">{{ $product->price }}€</p>
+                            </div>
+                        </div>
+                    </a>
                 </div>
-            </div>
-            <div class="col-6 col-md-4 col-lg-3">
-                <div class="card h-100 border-0 shadow">
-                    <img src="{{ asset('img/orchid.jpg') }}" alt="Orchid Grace" class="product-img">
-                    <div class="card-body text-center p-3">
-                        <p class="mb-1 fw-medium">Orchid Grace</p>
-                        <p class="text-muted mb-0">18.75€</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-md-4 col-lg-3">
-                <div class="card h-100 border-0 shadow">
-                    <img src="{{ asset('img/lily.jpg') }}" alt="Lily Serenity" class="product-img">
-                    <div class="card-body text-center p-3">
-                        <p class="mb-1 fw-medium">Lily Serenity</p>
-                        <p class="text-muted mb-0">13.80€</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-md-4 col-lg-3">
-                <div class="card h-100 border-0 shadow">
-                    <img src="{{ asset('img/pheon.jpg') }}" alt="Peony Charm" class="product-img">
-                    <div class="card-body text-center p-3">
-                        <p class="mb-1 fw-medium">Peony Charm</p>
-                        <p class="text-muted mb-0">14.30€</p>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
         <div class="text-center mt-4">
             <a href="{{ url('/search') }}" class="btn btn-outline-dark">Zobraziť všetky kvety →</a>
         </div>
     </div>
 
+    {{-- Bundle Modal --}}
+    <div class="modal fade" id="bundleModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title fw-bold">Pridať balík do košíka?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-center py-3">
+                    <p class="text-muted mb-1" id="bundle-names"></p>
+                    <p class="fw-bold fs-5 mt-2">Spolu: <span id="bundle-price"></span>€</p>
+                </div>
+                <div class="modal-footer border-0 justify-content-center gap-2">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Zrušiť</button>
+                    <form method="POST" action="{{ route('cart.addBundle') }}" id="bundle-form">
+                        @csrf
+                        <input type="hidden" name="product1_id" id="bundle-p1">
+                        <input type="hidden" name="product2_id" id="bundle-p2">
+                        <button type="submit" class="btn btn-danger px-4">Pridať do košíka</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if(session('bundle_success'))
+        <div class="container mt-3">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('bundle_success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        </div>
+    @endif
+
     <div class="container pb-5">
+        <h2 class="text-center mb-4 section-title">Balíky kvetov</h2>
         <div class="row g-4">
-            <div class="col-lg-4">
-                <div class="card h-100 border-0 shadow">
-                    <div class="card-body p-3">
-                        <div class="row g-3">
-                            <div class="col-6"><img src="{{ asset('img/rose.jpg') }}" alt="Rose in bundle" class="bundle-img"></div>
-                            <div class="col-6"><img src="{{ asset('img/pheon.jpg') }}" alt="Peony in bundle" class="bundle-img"></div>
+            @foreach($bundles as $bundle)
+                @php
+                    $p1 = $bundle->values()[0];
+                    $p2 = $bundle->values()[1];
+                    $totalPrice = $p1->price + $p2->price;
+                @endphp
+                <div class="col-lg-4">
+                    <div class="card h-100 border-0 shadow bundle-card"
+                         onclick="openBundleModal(
+                             {{ $p1->id }}, {{ $p2->id }},
+                             '{{ addslashes($p1->name) }}', '{{ addslashes($p2->name) }}',
+                             '{{ number_format($totalPrice, 2) }}'
+                         )">
+                        <div class="card-body p-3">
+                            <div class="row g-3">
+                                <div class="col-6">
+                                    <img src="{{ asset($p1->images->first()->path ?? 'img/placeholder.jpg') }}"
+                                         alt="{{ $p1->name }}" class="bundle-img rounded">
+                                </div>
+                                <div class="col-6">
+                                    <img src="{{ asset($p2->images->first()->path ?? 'img/placeholder.jpg') }}"
+                                         alt="{{ $p2->name }}" class="bundle-img rounded">
+                                </div>
+                            </div>
+                            <div class="mt-3 text-center">
+                                <p class="mb-1 fw-medium">{{ $p1->name }} & {{ $p2->name }}</p>
+                                <p class="text-muted mb-0">{{ number_format($totalPrice, 2) }}€</p>
+                            </div>
                         </div>
-                        <div class="mt-3 text-center">
-                            <p class="mb-1 fw-medium">Romantic Rose & Peony</p>
-                            <p class="text-muted mb-0">22.50€</p>
-                        </div>
-                    </div>
-                    <div class="card-footer bg-light text-center"><small class="text-muted">Balík kvetov</small></div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="card h-100 border-0 shadow">
-                    <div class="card-body p-3">
-                        <div class="row g-3">
-                            <div class="col-6"><img src="{{ asset('img/tulip.jpg') }}" alt="Tulip in bundle" class="bundle-img"></div>
-                            <div class="col-6"><img src="{{ asset('img/daisy.jpg') }}" alt="Daisy in bundle" class="bundle-img"></div>
-                        </div>
-                        <div class="mt-3 text-center">
-                            <p class="mb-1 fw-medium">Spring Tulip & Daisy</p>
-                            <p class="text-muted mb-0">19.99€</p>
-                        </div>
-                    </div>
-                    <div class="card-footer bg-light text-center"><small class="text-muted">Balík kvetov</small></div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="card h-100 border-0 shadow">
-                    <div class="card-body p-3">
-                        <div class="row g-3">
-                            <div class="col-6"><img src="{{ asset('img/orchid.jpg') }}" alt="Orchid in bundle" class="bundle-img"></div>
-                            <div class="col-6"><img src="{{ asset('img/lily.jpg') }}" alt="Lily in bundle" class="bundle-img"></div>
-                        </div>
-                        <div class="mt-3 text-center">
-                            <p class="mb-1 fw-medium">Premium Orchid & Lily</p>
-                            <p class="text-muted mb-0">27.40€</p>
+                        <div class="card-footer bg-light text-center">
+                            <small class="text-muted">Balík kvetov</small>
                         </div>
                     </div>
-                    <div class="card-footer bg-light text-center"><small class="text-muted">Balík kvetov</small></div>
                 </div>
-            </div>
+            @endforeach
         </div>
     </div>
 
@@ -270,5 +276,14 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+function openBundleModal(p1id, p2id, p1name, p2name, price) {
+    document.getElementById('bundle-p1').value = p1id;
+    document.getElementById('bundle-p2').value = p2id;
+    document.getElementById('bundle-names').textContent = p1name + ' + ' + p2name;
+    document.getElementById('bundle-price').textContent = price;
+    new bootstrap.Modal(document.getElementById('bundleModal')).show();
+}
+</script>
 </body>
 </html>
