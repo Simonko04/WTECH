@@ -1,1 +1,0 @@
-//TODO connect all checkout pages together

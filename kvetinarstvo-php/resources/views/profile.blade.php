@@ -92,7 +92,7 @@
 
         <div class="col-lg-7">
             <div class="bg-light p-5 rounded shadow-sm h-100 d-flex flex-column">
-                <h2 class="h5 mb-4 pb-2 border-bottom text-dark">Contact Information</h2>
+                <h2 class="h5 mb-4 pb-2 border-bottom text-dark">Information</h2>
 
                 <table class="table table-borderless mb-5 bg-transparent" style="--bs-table-bg: transparent;">
                     <tbody>

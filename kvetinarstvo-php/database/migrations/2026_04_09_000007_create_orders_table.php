@@ -16,9 +16,6 @@ return new class extends Migration
             $table->string('shipping_method', 100);
             $table->string('shipping_customer_name', 255);
             $table->string('shipping_customer_surname', 255);
-            $table->string('shipping_street', 255);
-            $table->string('shipping_town', 255);
-            $table->string('shipping_psc', 15);
             $table->string('payment_method', 100);
             $table->dateTime('paid_at')->nullable();
             $table->timestamps();

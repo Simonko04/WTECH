@@ -185,9 +185,10 @@
                       <strong class="text-dark">{{ number_format($total, 2) }}€</strong>
                   </div>
                   <hr class="w-100 my-1 border-secondary">
-                  <button type="button" class="btn-continue bg-secondary bg-opacity-25 border-0 px-5 py-2 rounded shadow-sm text-dark fw-bold w-100 text-uppercase">
+                  <a href="{{ route('checkout.index') }}"
+                     class="btn-continue bg-secondary bg-opacity-25 border-0 px-5 py-2 rounded shadow-sm text-dark fw-bold w-100 text-uppercase text-decoration-none text-center d-block">
                       pokračovať
-                  </button>
+                  </a>
               </div>
           </div>
       @endif
