@@ -12,6 +12,15 @@ class ProductController extends Controller
     {
         $query = Product::with('images');
 
+        if ($request->filled('q')) {
+            $search = $request->q;
+            $query->where(function ($q) use ($search) {
+                $q->whereRaw("unaccent(name) ILIKE unaccent(?)", ["%{$search}%"])
+                ->orWhereRaw("unaccent(short_description) ILIKE unaccent(?)", ["%{$search}%"])
+                ->orWhereRaw("unaccent(full_description) ILIKE unaccent(?)", ["%{$search}%"]);
+            });
+        }
+
         if ($request->has('category')) {
             $categories = (array) $request->category;
             $query->whereIn('category_id', $categories);

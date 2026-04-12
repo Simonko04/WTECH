@@ -11,6 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
+        //enable unaccent extention
+        DB::statement('CREATE EXTENSION IF NOT EXISTS unaccent;');
+
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
@@ -42,6 +45,9 @@ return new class extends Migration
      */
     public function down(): void
     {
+        //disable extention
+        DB::statement('DROP EXTENSION IF EXISTS unaccent;');
+
         Schema::dropIfExists('users');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');

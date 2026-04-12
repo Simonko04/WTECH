@@ -59,12 +59,13 @@
         <!-- Sekundárny search bar -->
         <div class="search-bar">
             <div class="container">
-                <form>
+                <form method="GET" action="{{ url('/search') }}">
                     <div class="input-group">
                         <span class="input-group-text bg-white border-0">
                             <i class="bi bi-search"></i>
                         </span>
-                        <input type="text" class="form-control border-0 shadow-none" placeholder="Search" aria-label="Search">
+                        <input type="text" class="form-control border-0 shadow-none" placeholder="Hľadať produkty..." aria-label="Search" name="q"value="{{ request('q') }}">
+                        <button class="btn btn-outline-secondary" type="submit">Hľadať</button>
                     </div>
                 </form>
             </div>
@@ -75,6 +76,7 @@
                 <!-- LEFT – Filtrovanie -->
                 <div class="col-lg-3 collapse d-lg-block" id="filterCollapse">
                     <form method="GET" action="{{ url('/search') }}" id="filter-form">
+                        <input type="hidden" name="q" value="{{ request('q') }}">
                         <div class="filter-sidebar sticky-top" style="top: 20px;">
                             <h5 class="mb-4 fw-bold">Filtrovanie</h5>
 
@@ -124,19 +126,6 @@
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-outline-secondary btn-sm mt-3 w-100">Použiť cenu</button>
-                            </div>
-
-                            <!-- Ostatné -->
-                            <div>
-                                <h6 class="mb-3 text-muted fw-medium">Ostatné</h6>
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input" type="checkbox" id="sklad" checked>
-                                    <label class="form-check-label" for="sklad">Na sklade</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="doprava">
-                                    <label class="form-check-label" for="doprava">Doprava zadarmo</label>
-                                </div>
                             </div>
 
                             <!-- Clear -->

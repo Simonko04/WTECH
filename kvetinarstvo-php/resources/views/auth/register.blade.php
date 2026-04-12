@@ -41,10 +41,24 @@
                 <span class="logo-placeholder text-danger">LOGO</span>
                 <span class="ms-3 fw-bold fs-4 text-dark d-none d-sm-flex">kvetinarstvo.sk</span>
             </a>
+            <form class="flex-grow-1 mx-4 d-none d-lg-flexL method="GET action="{{ url('/search') }}">
+                <div class="input-group">
+                    <input type="text" class="form-control" name="q" placeholder="Hľadať produkty..." aria-label="Search">
+                    <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-search"></i></button>
+                </div>
+            </form>
             <div class="d-flex gap-4">
                 <a href="{{ url('/wishlist') }}" class="text-dark"><i class="bi bi-heart fs-3"></i></a>
                 <a href="{{ url('/cart') }}" class="text-dark"><i class="bi bi-cart fs-3"></i></a>
             </div>
+        </div>
+        <div class="mt-3 d-lg-none">
+            <form method="GET" action="{{ url('/search') }}">
+                <div class="input-group">
+                    <input type="text" class="form-control" name="q" placeholder="Hľadať produkty..." aria-label="Search">
+                    <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-search"></i></button>
+                </div>
+            </form>
         </div>
     </div>
 </header>
