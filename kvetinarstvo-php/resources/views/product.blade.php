@@ -94,7 +94,7 @@
                             <span class="logo-placeholder text-danger">LOGO</span>
                             <span class="ms-3 fw-bold fs-4 text-dark d-none d-sm-flex">kvetinarstvo.sk</span>
                         </a>
-                        <form class="flex-grow-1 mx-4 d-none d-lg-flex" method="GET action="{{ url('/search') }}">
+                        <form class="flex-grow-1 mx-4 d-none d-lg-flex" method="GET" action="{{ url('/search') }}">
                             <div class="input-group">
                                 <input type="text" class="form-control" name="q" placeholder="Hľadať produkty..." aria-label="Search">
                                 <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-search"></i></button>
