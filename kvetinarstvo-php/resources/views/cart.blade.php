@@ -139,7 +139,7 @@
 
                           <div class="d-flex align-items-center gap-3 flex-grow-1" style="min-width: 250px;">
                               <div class="bg-white border rounded" style="width: 60px; height: 60px; overflow: hidden;">
-                                  <img src="{{ asset($item['image']) }}" alt="{{ $item['name'] }}" class="w-100 h-100 object-fit-cover">
+                                  <img src="{{ asset($item['image'] ?? '') }}" alt="{{ $item['name'] ?? '' }}" class="w-100 h-100 object-fit-cover">
                               </div>
                               <a href="{{ route('product.show', $item['slug']) }}" class="product-link text-dark text-decoration-none fw-medium text-truncate">
                                   {{ $item['name'] }}

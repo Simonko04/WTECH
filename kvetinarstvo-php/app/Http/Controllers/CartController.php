@@ -16,6 +16,7 @@ class CartController extends Controller
             $items = Cart::where('user_id', Auth::id())->get();
             $cart = [];
             foreach ($items as $item) {
+                if (!$item->product) continue;
                 $cart[$item->product_id] = [
                     'name'     => $item->product->name,
                     'price'    => $item->product->price,
@@ -155,8 +156,15 @@ class CartController extends Controller
                 if (isset($cart[$productId])) {
                     $cart[$productId]['quantity'] += 1;
                 } else {
-                    $product = \App\Models\Product::find($productId);
-                    $cart[$productId] = ['quantity' => 1, 'price' => $product->price];
+                    $product = \App\Models\Product::with('images')->find($productId);
+                    if (!$product) continue;
+                    $cart[$productId] = [
+                        'quantity' => 1,
+                        'price'    => $product->price,
+                        'name'     => $product->name,
+                        'slug'     => $product->slug,
+                        'image'    => $product->images->first()->path ?? '',
+                    ];
                 }
                 session()->put('cart', $cart);
             }
