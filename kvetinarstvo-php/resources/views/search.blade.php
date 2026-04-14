@@ -71,7 +71,7 @@
             </div>
         </div>
 
-        <div class="container py-5">
+        <div class="container py-4 pt-sm-5">
             <div class="row g-5">
                 <!-- LEFT – Filtrovanie -->
                 <div class="col-lg-3 collapse d-lg-block" id="filterCollapse">
@@ -113,7 +113,7 @@
                             </div>
 
                             <!-- Cenové rozpätie -->
-                            <div class="mb-5">
+                            <div class="mb-3">
                                 <h6 class="mb-3 text-muted fw-medium">Cenové rozpätie</h6>
                                 <div class="row g-2">
                                     <div class="col-6">
@@ -127,10 +127,10 @@
                                 </div>
                                 <button type="submit" class="btn btn-outline-secondary btn-sm mt-3 w-100">Použiť cenu</button>
                             </div>
-
+                            <hr>
                             <!-- Clear -->
                             @if(request()->hasAny(['category', 'color', 'price_from', 'price_to', 'sort']))
-                                <a href="{{ url('/search') }}" class="btn btn-outline-secondary btn-sm mt-4 w-100">Zrušiť filtre</a>
+                                <a href="{{ url('/search') }}" class="btn btn-outline-secondary btn-sm w-100">Zrušiť filtre</a>
                             @endif
 
                         </div>
@@ -144,6 +144,12 @@
                         <h5 class="mb-0 fw-bold">Výsledky vyhľadávania</h5>
 
                         <div class="sort-container">
+                            <div class="d-lg-none ms-0 me-sm-3 pb-2 pb-sm-0 text-end w-100">
+                                <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#filterCollapse">
+                                    <i class="bi bi-funnel"></i> Filtre
+                                </button>
+                            </div>
+                        
                             <label class="btn btn-outline-secondary dropdown-toggle sort-btn" for="sort-toggle">
                                 <i class="bi bi-sort-down-alt me-2"></i>
                                 Preusporiadať
@@ -157,11 +163,7 @@
                                 <div class="sort-option" onclick="document.getElementById('sort-input').value='name_desc';  document.getElementById('filter-form').submit();">Názov Z – A</div>
                             </div>
                             
-                              <div class="d-lg-none ms-0 ms-sm-3 text-end w-100">
-                                <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#filterCollapse">
-                                    <i class="bi bi-funnel"></i> Filtre
-                                </button>
-                            </div>
+                           
                         </div>
                     </div>
 

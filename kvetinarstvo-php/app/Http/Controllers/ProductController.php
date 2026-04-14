@@ -21,12 +21,12 @@ class ProductController extends Controller
             });
         }
 
-        if ($request->has('category')) {
+        if ($request->filled('category')) {
             $categories = (array) $request->category;
             $query->whereIn('category_id', $categories);
         }
 
-        if ($request->has('color')) {
+        if ($request->filled('color')) {
             $colors = (array) $request->color;
             $query->whereIn('color_id', $colors);
         }
