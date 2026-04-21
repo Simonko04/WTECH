@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {   
-
+    //TODO kategorie zvlast
     public function index(Request $request)
     {
         $query = Product::with('images');
@@ -56,11 +56,24 @@ class ProductController extends Controller
             }
         }
 
+        $priceBaseQuery = clone $query;
+        $priceMin = (clone $priceBaseQuery)->min('price');
+        $priceMax = (clone $priceBaseQuery)->max('price');
+
+        if ($request->filled('price_from')) {
+            $query->where('price', '>=', $request->price_from);
+        }
+
+        if ($request->filled('price_to')) {
+            $query->where('price', '<=', $request->price_to);
+        }
+
+
         $products = $query->paginate(9)->withQueryString();
         $categories = \App\Models\Category::all();
         $colors = \App\Models\Color::all();
 
-        return view('search', compact('products', 'categories', 'colors'));
+        return view('search', compact('products', 'categories', 'colors', 'priceMin', 'priceMax'));
     }
 
 

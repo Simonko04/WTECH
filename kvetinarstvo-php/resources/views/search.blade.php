@@ -112,24 +112,30 @@
                                 @endforeach
                             </div>
 
+                            @php
+                                $fromValue = request()->filled('price_from') ? max((float)request('price_from'), (float)$priceMin) : $priceMin;
+                                $toValue = request()->filled('price_to') ? min((float)request('price_to'), (float)$priceMax) : $priceMax;
+                            @endphp
+                            <!-- Cenové rozpätie -->
+
                             <!-- Cenové rozpätie -->
                             <div class="mb-3">
                                 <h6 class="mb-3 text-muted fw-medium">Cenové rozpätie</h6>
                                 <div class="row g-2">
                                     <div class="col-6">
                                         <label class="form-label small text-muted">Od</label>
-                                        <input type="number" class="form-control" name="price_from" value="{{ request('price_from') }}" min="0" step="0.01">
+                                        <input type="number" class="form-control" name="price_from" value="{{ $fromValue }}" min="0" step="0.01">
                                     </div>
                                     <div class="col-6">
                                         <label class="form-label small text-muted">Do</label>
-                                        <input type="number" class="form-control" name="price_to" value="{{ request('price_to') }}" min="0" step="0.01">
+                                        <input type="number" class="form-control" name="price_to" value="{{ $toValue }}" min="0" step="0.01">
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-outline-secondary btn-sm mt-3 w-100">Použiť cenu</button>
                             </div>
-                            <hr>
                             <!-- Clear -->
                             @if(request()->hasAny(['category', 'color', 'price_from', 'price_to', 'sort']))
+                                <hr>
                                 <a href="{{ url('/search') }}" class="btn btn-outline-secondary btn-sm w-100">Zrušiť filtre</a>
                             @endif
 
