@@ -180,6 +180,9 @@
                 <p id="main-price" class="bg-secondary bg-opacity-25 px-4 py-2 fs-5 fw-bold d-inline-block shadow-sm m-0 rounded">
                     {{ $product->price }}€
                 </p>
+                <p class="mb-0 {{ $product->quantity_available > 0 ? 'text-success' : 'text-danger' }}">
+                    {{ $product->quantity_available > 0 ? 'Na sklade: ' . $product->quantity_available . ' ks' : 'Vypredané' }}
+                </p>
 
                 <div class="d-flex align-items-center gap-3 gap-md-4">
                     <!-- Výber množstva -->
@@ -242,6 +245,9 @@
                             <div class="card-body text-center p-3">
                                 <p class="mb-1 fw-medium">{{ $related->name }}</p>
                                 <p class="text-muted mb-0">{{ $related->price }}€</p>
+                                <p class="small mb-0 {{ $related->quantity_available > 0 ? 'text-success' : 'text-danger' }}">
+                                    {{ $related->quantity_available > 0 ? 'Na sklade: ' . $related->quantity_available . ' ks' : 'Vypredané' }}
+                                </p>
                             </div>
                         </div>
                     </a>
@@ -288,7 +294,8 @@
             <div class="text-center small text-muted">Navrhnuté pre demo účely • Obsahuje vymyslené údaje</div>
         </div>
     </footer>
-
+    <!-- Bootstrap 5.3 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 <script>

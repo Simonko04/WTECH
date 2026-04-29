@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search result - kvetinarstvo.sk</title>
+    <title>{{ $category->name }} - kvetinarstvo.sk</title>
 
     <!-- Bootstrap 5.3 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -41,6 +41,12 @@
                             <span class="logo-placeholder text-danger">LOGO</span>
                             <span class="ms-3 fw-bold fs-4 text-dark d-none d-sm-flex">kvetinarstvo.sk</span>
                         </a>
+                        <form class="flex-grow-1 mx-4 d-none d-lg-flex" method="GET" action="{{ url('/search') }}">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="q" placeholder="Hľadať produkty..." aria-label="Search">
+                                <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-search"></i></button>
+                            </div>
+                        </form>
                         <div class="d-flex gap-4 align-items-center">
                             <a href="{{ url('/wishlist') }}" class="text-dark"><i class="bi bi-heart fs-3"></i></a>
                             @auth
@@ -56,47 +62,31 @@
 
     <!-- MAIN CONTENT – Search result -->
     <main class="flex-grow-1 py-4">
-        <!-- Sekundárny search bar -->
-        <div class="search-bar">
-            <div class="container">
-                <form method="GET" action="{{ url('/search') }}">
-                    <div class="input-group">
-                        <span class="input-group-text bg-white border-0">
-                            <i class="bi bi-search"></i>
-                        </span>
-                        <input type="text" class="form-control border-0 shadow-none" placeholder="Hľadať produkty..." aria-label="Search" name="q"value="{{ request('q') }}">
-                        <button class="btn btn-outline-secondary" type="submit">Hľadať</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-
+        
         <div class="container py-4 pt-sm-5">
+
+            <!-- Category banner -->
+            <div class="bg-secondary bg-opacity-10 rounded py-5 text-center mb-4">
+                <h2 class="fw-bold mb-3">{{ $category->name }}</h2>
+                <div class="d-flex flex-wrap justify-content-center gap-2">
+                    @foreach($allCategories as $cat)
+                        <a href="{{ route('category.show', $cat->slug) }}"
+                           class="btn btn-sm {{ $cat->id === $category->id ? 'btn-dark' : 'btn-outline-dark' }}">
+                            {{ $cat->name }}
+                        </a>
+                    @endforeach
+                </div>
+            </div>
+
             <div class="row g-5">
                 <!-- LEFT – Filtrovanie -->
                 <div class="col-lg-3 collapse d-lg-block" id="filterCollapse">
-                    <form method="GET" action="{{ url('/search') }}" id="filter-form">
-                        <input type="hidden" name="q" value="{{ request('q') }}">
+                    <form method="GET" action="{{ route('category.show', $category->slug) }}" id="filter-form">
                         <div class="filter-sidebar sticky-top" style="top: 20px;">
                             <h5 class="mb-4 fw-bold">Filtrovanie</h5>
 
                             <!-- Hidden sort input -->
                             <input type="hidden" name="sort" id="sort-input" value="{{ request('sort') }}">
-
-                            <!-- Kategorie kvetov -->
-                            <div class="mb-5">
-                                <h6 class="mb-3 text-muted fw-medium">Kategórie</h6>
-                                @foreach($categories as $category)
-                                    <div class="form-check mb-2">
-                                        <input class="form-check-input" type="checkbox" id="cat-{{ $category->id }}"
-                                            name="category[]" value="{{ $category->id }}"
-                                            {{ in_array($category->id, request('category', [])) ? 'checked' : '' }}
-                                            onchange="this.form.submit()">
-                                        <label class="form-check-label" for="cat-{{ $category->id }}">{{ $category->name }}</label>
-                                    </div>
-                                @endforeach
-                            </div>
-
 
                             <!-- Typy kvetov -->
                             <div class="mb-5">
@@ -116,7 +106,7 @@
                                 $fromValue = request()->filled('price_from') ? max((float)request('price_from'), (float)$priceMin) : $priceMin;
                                 $toValue = request()->filled('price_to') ? min((float)request('price_to'), (float)$priceMax) : $priceMax;
                             @endphp
-
+                            
                             <!-- Cenové rozpätie -->
                             <div class="mb-3">
                                 <h6 class="mb-3 text-muted fw-medium">Cenové rozpätie</h6>
@@ -133,9 +123,9 @@
                                 <button type="submit" class="btn btn-outline-secondary btn-sm mt-3 w-100">Použiť cenu</button>
                             </div>
                             <!-- Clear -->
-                            @if(request()->hasAny(['category', 'color', 'price_from', 'price_to', 'sort', 'in_stock']))
+                            @if(request()->hasAny(['color', 'price_from', 'price_to', 'sort', 'in_stock']))
                                 <hr>
-                                <a href="{{ url('/search') }}" class="btn btn-outline-secondary btn-sm w-100">Zrušiť filtre</a>
+                                <a href="{{ route('category.show', $category->slug) }}" class="btn btn-outline-secondary btn-sm w-100">Zrušiť filtre</a>
                             @endif
 
                             <!-- Ostatné -->
@@ -157,7 +147,7 @@
                 <div class="col-lg-9">
 
 					<div class="d-flex justify-content-between align-items-center mb-4">
-                        <h5 class="mb-0 fw-bold">Výsledky vyhľadávania</h5>
+                        <h5 class="mb-0 fw-bold">{{ $category->name }}</h5>
 
                         <div class="sort-container">
                             <div class="d-lg-none ms-0 me-sm-3 pb-2 pb-sm-0 text-end w-100">

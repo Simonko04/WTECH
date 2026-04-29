@@ -104,7 +104,7 @@
         <h2 class="text-center mb-4 section-title">Pre akú príležitosť hľadáte?</h2>
         <div class="row g-3 text-center">
             <div class="col-6 col-md-3">
-                <a href="{{ url('/search?category[]=2') }}" class="text-decoration-none">
+                <a href="{{ route('category.show', 'romantika-a-narodeniny') }}" class="text-decoration-none">
                     <div class="card h-100 border-0 shadow-sm">
                         <img src="{{ asset('img/romantic.jpg') }}" class="card-img-top" alt="Romantika">
                         <div class="card-body"><h6 class="fw-medium">Romantika & Narodeniny</h6></div>
@@ -112,7 +112,7 @@
                 </a>
             </div>
             <div class="col-6 col-md-3">
-                <a href="{{ url('/search?category[]=1') }}" class="text-decoration-none">
+                <a href="{{ route('category.show', 'svadby-a-oslavy') }}" class="text-decoration-none">
                     <div class="card h-100 border-0 shadow-sm">
                         <img src="{{ asset('img/wedding.jpg') }}" class="card-img-top" alt="Svadba">
                         <div class="card-body"><h6 class="fw-medium">Svadby & Oslavy</h6></div>
@@ -120,7 +120,7 @@
                 </a>
             </div>
             <div class="col-6 col-md-3">
-                <a href="{{ url('/search?category[]=3') }}" class="text-decoration-none">
+                <a href="{{ route('category.show', 'sustast') }}" class="text-decoration-none">
                     <div class="card h-100 border-0 shadow-sm">
                         <img src="{{ asset('img/sympathy.jpg') }}" class="card-img-top" alt="Sústrasť">
                         <div class="card-body"><h6 class="fw-medium">Sústrasť</h6></div>
@@ -128,7 +128,7 @@
                 </a>
             </div>
             <div class="col-6 col-md-3">
-                <a href="{{ url('/search?category[]=4') }}" class="text-decoration-none">
+                <a href="{{ route('category.show', 'firemne-darceky') }}" class="text-decoration-none">
                     <div class="card h-100 border-0 shadow-sm">
                         <img src="{{ asset('img/corporate.jpg') }}" class="card-img-top" alt="Firemné">
                         <div class="card-body"><h6 class="fw-medium">Firemné darčeky</h6></div>

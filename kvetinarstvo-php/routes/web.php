@@ -28,6 +28,8 @@ Route::get('/checkout/confirmation/{order}', [CheckoutController::class, 'confir
 // Products
 Route::get('/product/{slug}', [ProductController::class, 'show'])->name('product.show');
 Route::get('/search',         [ProductController::class, 'index'])->name('search');
+Route::get('/category/{slug}', [ProductController::class, 'category'])->name('category.show');
+
 
 // Wishlist
 Route::get('/wishlist', function () { return view('wishlist'); });

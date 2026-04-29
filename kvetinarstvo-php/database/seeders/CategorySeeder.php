@@ -12,13 +12,13 @@ class CategorySeeder extends Seeder
         DB::table('categories')->insert([
 
             // ID = 1
-            ['name' => 'Svadby a oslavy',  'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Svadby a oslavy', 'slug' => 'svadby-a-oslavy',   'created_at' => now(), 'updated_at' => now()],
             // ID = 2
-            ['name' => 'Romantika a narodeniny',  'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Romantika a narodeniny', 'slug' => 'romantika-a-narodeniny', 'created_at' => now(), 'updated_at' => now()],
             // ID = 3
-            ['name' => 'Sústrasť',  'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Sústrasť', 'slug' => 'sustast',  'created_at' => now(), 'updated_at' => now()],
             // ID = 4
-            ['name' => 'Firemné darčeky',  'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Firemné darčeky', 'slug' => 'firemne-darceky', 'created_at' => now(), 'updated_at' => now()],
 
         ]);
     }
