@@ -145,7 +145,7 @@
                 <div class="col-6 col-md-4 col-lg-3">
                     <a href="{{ route('product.show', $product->slug) }}" class="text-decoration-none text-dark">
                         <div class="card h-100 border-0 shadow">
-                            <img src="{{ asset($product->images->first()->path ?? 'img/placeholder.jpg') }}"
+                            <img src="{{ asset($product->images->first()?->path ?? 'img/placeholder.svg') }}"
                                  alt="{{ $product->name }}"
                                  class="product-img">
                             <div class="card-body text-center p-3">
@@ -215,11 +215,11 @@
                         <div class="card-body p-3">
                             <div class="row g-3">
                                 <div class="col-6">
-                                    <img src="{{ asset($p1->images->first()->path ?? 'img/placeholder.jpg') }}"
+                                    <img src="{{ asset($p1->images->first()?->path ?? 'img/placeholder.svg') }}"
                                          alt="{{ $p1->name }}" class="bundle-img rounded">
                                 </div>
                                 <div class="col-6">
-                                    <img src="{{ asset($p2->images->first()->path ?? 'img/placeholder.jpg') }}"
+                                    <img src="{{ asset($p2->images->first()?->path ?? 'img/placeholder.svg') }}"
                                          alt="{{ $p2->name }}" class="bundle-img rounded">
                                 </div>
                             </div>

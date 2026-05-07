@@ -188,7 +188,7 @@
                             <div class="col-6 col-md-4 col-lg-4">
                                 <a href="{{ route('product.show', $product->slug) }}" class="text-decoration-none text-dark">
                                     <div class="card h-100 border-0 shadow">
-                                        <img src="{{ asset($product->images->first()->path) }}" alt="{{ $product->name }}" class="product-img">
+                                        <img src="{{ asset($product->images->first()?->path ?? 'img/placeholder.svg') }}" alt="{{ $product->name }}" class="product-img">
                                         <div class="card-body text-center p-3">
                                             <p class="mb-1 fw-medium">{{ $product->name }}</p>
                                             <p class="text-muted mb-0">{{ $product->price }}€</p>

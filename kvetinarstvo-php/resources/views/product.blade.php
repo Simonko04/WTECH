@@ -149,7 +149,7 @@
                     <div class="bg-white border border-secondary overflow-hidden d-flex align-items-center justify-content-center shadow-sm mx-auto"
                          style="max-width: 25rem; aspect-ratio: 1/1;">
                         <img id="main-image"
-                             src="{{ asset($product->images->first()->path) }}"
+                             src="{{ asset($product->images->first()?->path ?? 'img/placeholder.svg') }}"
                              alt="Fotografia produktu - {{ $product->name }}"
                              class="w-100 h-100 object-fit-cover">
                     </div>
@@ -241,7 +241,7 @@
                 <div class="col-6 col-md-4 col-lg-3">
                     <a href="{{ route('product.show', $related->slug) }}" class="text-decoration-none text-dark">
                         <div class="card h-100 border-0 shadow recommendation-card">
-                            <img src="{{ asset($related->images->first()->path) }}" alt="{{ $related->name }}" class="product-img">
+                            <img src="{{ asset($related->images->first()?->path ?? 'img/placeholder.svg') }}" alt="{{ $related->name }}" class="product-img">
                             <div class="card-body text-center p-3">
                                 <p class="mb-1 fw-medium">{{ $related->name }}</p>
                                 <p class="text-muted mb-0">{{ $related->price }}€</p>
