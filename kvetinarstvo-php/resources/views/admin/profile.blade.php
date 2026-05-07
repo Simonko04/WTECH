@@ -47,7 +47,7 @@
             <div class="d-flex align-items-center">
               
                 <!-- Logo + Admin title -->
-                <a href="Home_page.html" class="d-flex align-items-center text-decoration-none text-white me-auto">
+                <a href="{{ route('admin.products.index') }}" class="d-flex align-items-center text-decoration-none text-white me-auto">
                     <span class="logo-placeholder text-danger">LOGO</span>
                     <span class="ms-3 fw-bold fs-4">kvetinarstvo.sk</span>
                     <span class="ms-3 badge bg-danger fs-6">ADMIN</span>
@@ -55,16 +55,19 @@
               
                 <!-- menu ikony -->
                 <div class="d-flex gap-3 align-items-center">
-                    <a href="product_list_admin.html" class="text-white decoration-none fw-medium">Produkty</a>
-                   
-                    <a href="profile_page.html" class="text-white">
+                    <a href="{{ route('admin.products.index') }}" class="text-white text-decoration-none fw-medium">Produkty</a>
+
+                    <a href="{{ route('admin.profile') }}" class="text-white">
                         <i class="bi bi-person-circle fs-4"></i>
                     </a>
-					
-					<a href="#" class="text-white d-flex align-items-center gap-2 text-decoration-none">
-                    <i class="bi bi-box-arrow-right fs-5"></i>
-                    <span class="d-none d-md-inline">Odhlásiť sa</span>
-                </a>
+
+					<form method="POST" action="{{ route('logout') }}" class="d-inline">
+                        @csrf
+                        <button type="submit" class="btn btn-link text-white d-flex align-items-center gap-2 text-decoration-none p-0">
+                            <i class="bi bi-box-arrow-right fs-5"></i>
+                            <span class="d-none d-md-inline">Odhlásiť sa</span>
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -74,7 +77,7 @@
 
     <nav aria-label="breadcrumb" class="mb-4">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="Home_page.html" class="text-decoration-none text-muted">Administracia</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('admin.products.index') }}" class="text-decoration-none text-muted">Administrácia</a></li>
             <li class="breadcrumb-item active text-muted" aria-current="page">Profile</li>
         </ol>
     </nav>
@@ -96,7 +99,7 @@
                 </figure>
 
                 <!-- Meno -->
-                <h1 id="user-display-name" class="fw-normal fs-4 mb-3">adam mrkva</h1>
+                <h1 id="user-display-name" class="fw-normal fs-4 mb-3">{{ Auth::user()->name }} {{ Auth::user()->surname }}</h1>
 
                 <!-- Status -->
                 <p>
@@ -118,7 +121,7 @@
                     <tr>
                         <td class="text-muted w-25 align-middle">E-mail:</td>
                         <td class="fw-medium text-dark text-sm-end" id="user-email">
-                            <a class="text-dark text-decoration-none">admin@kvetinarstvo.sk</a>
+                            <a class="text-dark text-decoration-none">{{ Auth::user()->email }}</a>
                         </td>
                     </tr>
 
@@ -142,7 +145,7 @@
                     <tr>
                         <td class="text-muted w-25 align-middle">Member since:</td>
                         <td class="fw-medium text-dark text-sm-end" id="user-reg-date">
-                            September 2025
+                            {{ Auth::user()->created_at->format('F Y') }}
                         </td>
                     </tr>
                     </tbody>

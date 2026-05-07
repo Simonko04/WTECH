@@ -74,7 +74,7 @@
             <div class="d-flex align-items-center">
               
                 <!-- Logo + Admin title -->
-                <a href="Home_page.html" class="d-flex align-items-center text-decoration-none text-white me-auto">
+                <a href="{{ url('/') }}" class="d-flex align-items-center text-decoration-none text-white me-auto">
                     <span class="logo-placeholder text-danger">LOGO</span>
                     <span class="ms-3 fw-bold fs-4">kvetinarstvo.sk</span>
                     <span class="ms-3 badge bg-danger fs-6">ADMIN</span>
@@ -95,23 +95,34 @@
                 </div>
 
                 <div class="auth-body">
-                    <form>
+                    @if($errors->any())
+                        <div class="alert alert-danger py-2">
+                            @foreach($errors->all() as $error)
+                                <p class="mb-0 small">{{ $error }}</p>
+                            @endforeach
+                        </div>
+                    @endif
+
+                    <form method="POST" action="{{ route('login') }}">
+                        @csrf
+                        <input type="hidden" name="admin_login" value="1">
+
                         <div class="mb-3">
                             <label class="form-label fw-medium text-muted small">Email</label>
-                            <input type="text" class="form-control form-control-lg" placeholder="admin@kvetinarstvo.sk" autocomplete="username">
+                            <input type="email" name="email" class="form-control form-control-lg" placeholder="admin@kvetinarstvo.sk" value="{{ old('email') }}" autocomplete="username" required>
                         </div>
-                        
+
                         <div class="mb-4">
                             <label class="form-label fw-medium text-muted small">Heslo</label>
-                            <input type="password" class="form-control form-control-lg" placeholder="••••••••" autocomplete="current-password">
+                            <input type="password" name="password" class="form-control form-control-lg" placeholder="••••••••" autocomplete="current-password" required>
                         </div>
-                       
+
                         <button type="submit" class="btn btn-admin text-white w-100 mb-3">
                             Prihlásiť sa ako administrátor
                         </button>
 
                         <div class="text-center mt-4 pt-3 border-top">
-                            <a href="Home_page.html" class="text-muted small">
+                            <a href="{{ url('/') }}" class="text-muted small">
                                 ← Späť na zákaznícku stránku
                             </a>
                         </div>

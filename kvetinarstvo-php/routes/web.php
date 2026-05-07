@@ -46,4 +46,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
 });
 
+// Admin
+Route::get('/admin/login', function () { return view('admin.login'); })->middleware('guest')->name('admin.login');
+
+Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/profile', function () { return view('admin.profile'); })->name('profile');
+    Route::get('/products',                [\App\Http\Controllers\AdminProductController::class, 'index'])->name('products.index');
+    Route::get('/products/create',         [\App\Http\Controllers\AdminProductController::class, 'create'])->name('products.create');
+    Route::get('/products/{product}/edit', [\App\Http\Controllers\AdminProductController::class, 'edit'])->name('products.edit');
+});
+
 require __DIR__.'/auth.php';

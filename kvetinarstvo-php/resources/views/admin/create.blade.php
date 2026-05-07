@@ -49,7 +49,7 @@
             <div class="d-flex align-items-center">
               
                 <!-- Logo + Admin title -->
-                <a href="Home_page.html" class="d-flex align-items-center text-decoration-none text-white me-auto">
+                <a href="{{ route('admin.products.index') }}" class="d-flex align-items-center text-decoration-none text-white me-auto">
                     <span class="logo-placeholder text-danger">LOGO</span>
                     <span class="ms-3 fw-bold fs-4">kvetinarstvo.sk</span>
                     <span class="ms-3 badge bg-danger fs-6">ADMIN</span>
@@ -57,16 +57,19 @@
               
                 <!-- menu ikony -->
                 <div class="d-flex gap-3 align-items-center">
-                    <a href="product_list_admin.html" class="text-white decoration-none fw-medium">Produkty</a>
+                    <a href="{{ route('admin.products.index') }}" class="text-white decoration-none fw-medium">Produkty</a>
                    
-                    <a href="profile_page.html" class="text-white">
+                    <a href="{{ route('admin.profile') }}" class="text-white">
                         <i class="bi bi-person-circle fs-4"></i>
                     </a>
 					
-					<a href="#" class="text-white d-flex align-items-center gap-2 text-decoration-none">
-                    <i class="bi bi-box-arrow-right fs-5"></i>
-                    <span class="d-none d-md-inline">Odhlásiť sa</span>
-                </a>
+					<form method="POST" action="{{ route('logout') }}" class="d-inline">
+                        @csrf
+                        <button type="submit" class="btn btn-link text-white d-flex align-items-center gap-2 text-decoration-none p-0">
+                            <i class="bi bi-box-arrow-right fs-5"></i>
+                            <span class="d-none d-md-inline">Odhlásiť sa</span>
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -77,7 +80,7 @@
     <!-- Breadcrumb -->
     <nav aria-label="breadcrumb" class="mb-4">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="Home_page.html" class="text-decoration-none text-muted">Administrácia</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('admin.products.index') }}" class="text-decoration-none text-muted">Administrácia</a></li>
             <li class="breadcrumb-item active text-muted" aria-current="page">Pridať produkt</li>
         </ol>
     </nav>
