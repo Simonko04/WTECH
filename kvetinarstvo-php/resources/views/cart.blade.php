@@ -152,9 +152,7 @@
                                   @csrf
                                   <input type="hidden" name="product_id" value="{{ $id }}">
                                   <button type="submit" name="quantity" value="{{ max(0, $item['quantity'] - 1) }}" class="fs-5 fw-bold text-dark border-0 bg-transparent cursor-pointer" aria-label="Znížiť množstvo">—</button>
-                                  <span class="quantity-display bg-white border rounded text-center fw-bold shadow-sm d-flex align-items-center justify-content-center" style="width:2.5rem;height:2.5rem;">
-                                      {{ $item['quantity'] }}
-                                  </span>
+                                  <input type="number" name="quantity" class="quantity-display bg-white border rounded text-center fw-bold shadow-sm" value="{{ $item['quantity'] }}" min="0" onchange="this.form.submit()">
                                   <button type="submit" name="quantity" value="{{ $item['quantity'] + 1 }}" class="fs-5 fw-bold text-dark border-0 bg-transparent cursor-pointer" aria-label="Zvýšiť množstvo">+</button>
                               </form>
 
