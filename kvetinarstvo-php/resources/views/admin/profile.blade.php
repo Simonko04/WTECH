@@ -42,17 +42,17 @@
 	<!-- HEADER - ADMIN -->
     <header class="border-bottom admin-header shadow-sm">
         <div class="container py-3">
-           
+
             <!-- Horný riadok headeru: logo + názov (vľavo) + vyhľadávanie (na desktop) + ikony (vpravo) -->
             <div class="d-flex align-items-center">
-              
+
                 <!-- Logo + Admin title -->
                 <a href="{{ route('admin.products.index') }}" class="d-flex align-items-center text-decoration-none text-white me-auto">
                     <span class="logo-placeholder text-danger">LOGO</span>
                     <span class="ms-3 fw-bold fs-4">kvetinarstvo.sk</span>
                     <span class="ms-3 badge bg-danger fs-6">ADMIN</span>
                 </a>
-              
+
                 <!-- menu ikony -->
                 <div class="d-flex gap-3 align-items-center">
                     <a href="{{ route('admin.products.index') }}" class="text-white text-decoration-none fw-medium">Produkty</a>
@@ -91,11 +91,10 @@
                 <!-- Avatar -->
                 <figure class="mb-3">
                     <div class="profile-avatar-frame bg-white border border-secondary rounded-circle overflow-hidden d-flex align-items-center justify-content-center shadow-sm">
-                        <img id="user-image"
-                             src="img/profile.jpg"
-                             alt="Profilová fotografia používateľa"
-                             class="w-100 h-100 object-fit-cover">
-                    </div>
+                        <img src="{{ asset('img/profile.png') }}"
+                                                     alt="Profilová fotografia používateľa"
+                                                     class="w-100 h-100 object-fit-cover">
+                                            </div>
                 </figure>
 
                 <!-- Meno -->

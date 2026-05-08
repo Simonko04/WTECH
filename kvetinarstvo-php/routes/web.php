@@ -60,6 +60,7 @@ Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->prefix
     Route::get('/products',                [\App\Http\Controllers\AdminProductController::class, 'index'])->name('products.index');
     Route::get('/products/create',         [\App\Http\Controllers\AdminProductController::class, 'create'])->name('products.create');
     Route::get('/products/{product}/edit', [\App\Http\Controllers\AdminProductController::class, 'edit'])->name('products.edit');
+    Route::post('/products/store', [\App\Http\Controllers\AdminProductController::class, 'store'])->name('products.store');
 });
 
 require __DIR__.'/auth.php';

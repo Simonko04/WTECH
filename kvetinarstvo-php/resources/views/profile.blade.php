@@ -65,7 +65,7 @@
             <div class="bg-light p-5 rounded shadow-sm d-flex flex-column align-items-center text-center h-100">
                 <figure class="mb-3">
                     <div class="profile-avatar-frame bg-white border border-secondary rounded-circle overflow-hidden d-flex align-items-center justify-content-center shadow-sm">
-                        <img src="{{ asset('img/profile.jpg') }}"
+                        <img src="{{ asset('img/profile.png') }}"
                              alt="Profilová fotografia používateľa"
                              class="w-100 h-100 object-fit-cover">
                     </div>
@@ -86,6 +86,7 @@
                     <a href="{{ url('/wishlist') }}" class="action-button bg-secondary bg-opacity-25 border-0 px-4 py-2 rounded shadow-sm text-dark text-decoration-none">
                         wishlist
                     </a>
+
                 </div>
             </div>
         </div>
@@ -108,15 +109,17 @@
                 </table>
 
                 <div class="mt-auto d-flex flex-column flex-sm-row justify-content-center gap-3">
-                    <button type="button" class="action-button bg-secondary bg-opacity-25 border-0 px-5 py-2 rounded shadow-sm text-dark fw-medium">
-                        change info
-                    </button>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <button type="submit" class="btn btn-outline-danger px-5 py-2 rounded shadow-sm fw-medium w-100">
                             log out
                         </button>
                     </form>
+                    @if(Auth::user()->role === 'admin')
+                            <a href="{{ route('admin.products.create') }}" class="action-button bg-danger bg-opacity-25 border-0 px-4 py-2 rounded shadow-sm text-dark text-decoration-none fw-bold">
+                                <i class="bi bi-plus-circle me-1"></i> Pridať produkt
+                            </a>
+                        @endif
                 </div>
             </div>
         </div>

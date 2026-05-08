@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use App\Models\ProductImage;;
 
 class AdminProductController extends Controller
-{   
+{
     public function index(Request $request)
     {
         $query = Product::with('images');
@@ -75,6 +77,68 @@ class AdminProductController extends Controller
         $categories = \App\Models\Category::all();
         $colors = \App\Models\Color::all();
         return view('admin.create', compact('categories', 'colors'));
+    }
+
+    public function store(Request $request)
+    {
+        // 1. Validácia formulára
+        $request->validate([
+                'name'               => 'required|string|max:255',
+                'price'              => 'required|numeric|min:0',
+                'category_id'        => 'required|exists:categories,id',
+                'color_id'           => 'required|exists:colors,id',
+                'quantity_available' => 'required|integer|min:0', // <-- TOTO PRIBUDLO
+                'short_description'  => 'required|string',
+                'full_description'   => 'required|string',
+                'images'             => 'required|array|min:1|max:4',
+                'images.*'           => 'image|mimes:jpeg,png,jpg,webp|max:2048'
+            ]);
+
+        // 2. Vygenerovanie unikátneho slugu z názvu
+        $slug = Str::slug($request->name);
+
+        // Ochrana, aby nebol duplicitný slug (pridá -1, -2 atď.)
+        $originalSlug = $slug;
+        $counter = 1;
+        while (Product::where('slug', $slug)->exists()) {
+            $slug = $originalSlug . '-' . $counter;
+            $counter++;
+        }
+
+         $product = Product::create([
+                'name'               => $request->name,
+                'slug'               => $slug,
+                'price'              => $request->price,
+                'category_id'        => $request->category_id,
+                'color_id'           => $request->color_id,
+                'short_description'  => $request->short_description,
+                'full_description'   => $request->full_description,
+                'quantity_available' => $request->quantity_available,
+            ]);
+
+        if ($request->hasFile('images')) {
+            $index = 1;
+            foreach ($request->file('images') as $file) {
+
+
+                $extension = $file->getClientOriginalExtension();
+
+
+                $filename = $slug . '_' . $index . '.' . $extension;
+
+                $file->move(public_path('img'), $filename);
+
+
+                ProductImage::create([
+                    'product_id' => $product->id,
+                    'path'       => 'img/' . $filename
+                ]);
+
+                $index++;
+            }
+        }
+
+        return redirect()->route('admin.products.index')->with('success', 'Produkt bol úspešne pridaný a obrázky boli uložené do zložky img!');
     }
 
     public function edit(Product $product)

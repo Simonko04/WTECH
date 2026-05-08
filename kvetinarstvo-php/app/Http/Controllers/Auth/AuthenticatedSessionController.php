@@ -30,7 +30,7 @@ class AuthenticatedSessionController extends Controller
 
         $this->mergeSessionCartToDb();
 
-        if (Auth::user()->role === 'admin' && $request->has('admin_login')) {
+        if (Auth::user()->role === 'admin') {
             return redirect()->route('admin.products.index');
         }
 
