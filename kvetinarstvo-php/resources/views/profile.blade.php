@@ -115,11 +115,6 @@
                             log out
                         </button>
                     </form>
-                    @if(Auth::user()->role === 'admin')
-                            <a href="{{ route('admin.products.create') }}" class="action-button bg-danger bg-opacity-25 border-0 px-4 py-2 rounded shadow-sm text-dark text-decoration-none fw-bold">
-                                <i class="bi bi-plus-circle me-1"></i> Pridať produkt
-                            </a>
-                        @endif
                 </div>
             </div>
         </div>

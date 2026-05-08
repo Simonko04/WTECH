@@ -148,4 +148,70 @@ class AdminProductController extends Controller
         $colors = \App\Models\Color::all();
         return view('admin.edit', compact('product', 'categories', 'colors'));
     }
+
+        public function update(Request $request, Product $product)
+        {
+            $request->validate([
+                'name'               => 'required|string|max:255|unique:products,name,' . $product->id,
+                'price'              => 'required|numeric|min:0',
+                'category_id'        => 'required|exists:categories,id',
+                'color_id'           => 'required|exists:colors,id',
+                'quantity_available' => 'required|integer|min:0',
+                'short_description'  => 'required|string',
+                'full_description'   => 'required|string',
+                'image_0'            => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+                'image_1'            => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+                'image_2'            => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+                'image_3'            => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            ]);
+
+            $slug = $product->slug;
+            if ($product->name !== $request->name) {
+                $slug = \Illuminate\Support\Str::slug($request->name);
+                $originalSlug = $slug;
+                $counter = 1;
+                while (Product::where('slug', $slug)->where('id', '!=', $product->id)->exists()) {
+                    $slug = $originalSlug . '-' . $counter;
+                    $counter++;
+                }
+            }
+
+            $product->update([
+                'name'               => $request->name,
+                'slug'               => $slug,
+                'price'              => $request->price,
+                'category_id'        => $request->category_id,
+                'color_id'           => $request->color_id,
+                'short_description'  => $request->short_description,
+                'full_description'   => $request->full_description,
+                'quantity_available' => $request->quantity_available,
+            ]);
+
+            for ($i = 0; $i < 4; $i++) {
+                $fileInputName = 'image_' . $i;
+
+                if ($request->hasFile($fileInputName)) {
+                    $file = $request->file($fileInputName);
+
+                    if ($file->isValid()) {
+                        $existingImage = $product->images->get($i);
+                        if ($existingImage) {
+                            $existingImage->delete();
+                        }
+
+                        $extension = $file->getClientOriginalExtension();
+                        $filename = $slug . '_' . ($i + 1) . '_' . time() . '.' . $extension;
+
+                        $file->move(public_path('img'), $filename);
+
+                        \App\Models\ProductImage::create([
+                            'product_id' => $product->id,
+                            'path'       => 'img/' . $filename
+                        ]);
+                    }
+                }
+            }
+
+            return redirect()->route('admin.products.index')->with('success', 'Produkt bol úspešne upravený!');
+        }
 }

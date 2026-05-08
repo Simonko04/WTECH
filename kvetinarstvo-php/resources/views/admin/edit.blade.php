@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KVETY - Pridanie produktu</title>
+    <title>Upraviť produkt: {{ $product->name }}</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
@@ -18,52 +18,100 @@
             font-weight: 900;
         }
 
-        /* Tlačidlo na uloženie - rovnaký štýl ako na iných stránkach */
-        .btn-continue {
-            transition: background-color 0.2s, color 0.2s;
-        }
-        .btn-continue:hover {
-            background-color: var(--primary-accent) !important;
-            color: #fff !important;
-        }
-
-        /* Štýlovanie formulárových prvkov pre konzistenciu */
-        .form-control:focus,
-        .form-select:focus {
-            border-color: var(--primary-accent);
-            box-shadow: 0 0 0 0.2rem rgba(214, 51, 132, 0.25);
-        }
-		.admin-header {
+        .admin-header {
             background-color: #1a1a1a;
             color: white;
+        }
+
+        /* Štýly pre klikateľné obrázkové boxy (dropzone náhrada) */
+        .image-upload-wrapper {
+            width: 5.5rem;
+            height: 5.5rem;
+            position: relative;
+            border: 2px dashed #adb5bd;
+            border-radius: 0.375rem;
+            overflow: hidden;
+            cursor: pointer;
+            background-color: #f8f9fa;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .image-upload-wrapper:hover {
+            border-color: var(--primary-accent);
+            background-color: #fff;
+        }
+
+        /* Samotný file input je natiahnutý na celú veľkosť wrapperu, ale je neviditeľný */
+        .image-upload-wrapper input[type="file"] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .image-upload-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        .upload-icon {
+            color: #6c757d;
+            z-index: 2;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            padding: 4px;
+        }
+
+        .image-upload-wrapper:hover .upload-icon {
+            color: var(--primary-accent);
+        }
+
+        /* Úprava pre inputy, aby zapadli do dizajnu */
+        .editable-input {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px dashed #ccc;
+            transition: border-color 0.2s;
+        }
+        .editable-input:focus {
+            border-color: var(--primary-accent);
+            box-shadow: none;
+            outline: none;
+            background: #fff;
+        }
+        .editable-textarea {
+            resize: vertical;
         }
     </style>
 </head>
 <body class="d-flex flex-column min-vh-100 bg-white">
 
-	<!-- HEADER - ADMIN -->
+    <!-- HEADER - ADMIN -->
     <header class="border-bottom admin-header shadow-sm">
         <div class="container py-3">
-           
-            <!-- Horný riadok headeru: logo + názov (vľavo) + vyhľadávanie (na desktop) + ikony (vpravo) -->
             <div class="d-flex align-items-center">
-              
-                <!-- Logo + Admin title -->
                 <a href="{{ route('admin.products.index') }}" class="d-flex align-items-center text-decoration-none text-white me-auto">
                     <span class="logo-placeholder text-danger">LOGO</span>
                     <span class="ms-3 fw-bold fs-4">kvetinarstvo.sk</span>
                     <span class="ms-3 badge bg-danger fs-6">ADMIN</span>
                 </a>
-              
-                <!-- menu ikony -->
                 <div class="d-flex gap-3 align-items-center">
-                    <a href="{{ route('admin.products.index') }}" class="text-white decoration-none fw-medium">Produkty</a>
-                   
-                    <a href="{{ route('admin.profile') }}" class="text-white">
+                    <a href="{{ route('admin.products.index') }}" class="text-white text-decoration-none fw-medium">Produkty</a>
+                    <a href="{{ route('admin.profile') ?? '#' }}" class="text-white">
                         <i class="bi bi-person-circle fs-4"></i>
                     </a>
-					
-					<form method="POST" action="{{ route('logout') }}" class="d-inline">
+                    <form method="POST" action="{{ route('logout') }}" class="d-inline">
                         @csrf
                         <button type="submit" class="btn btn-link text-white d-flex align-items-center gap-2 text-decoration-none p-0">
                             <i class="bi bi-box-arrow-right fs-5"></i>
@@ -77,95 +125,154 @@
 
 <main class="container py-5 flex-grow-1">
 
-    <!-- Breadcrumb -->
-    <nav aria-label="breadcrumb" class="mb-4">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('admin.products.index') }}" class="text-decoration-none text-muted">Administrácia</a></li>
-            <li class="breadcrumb-item active text-muted" aria-current="page">Pridať produkt</li>
-        </ol>
-    </nav>
+    @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Zavrieť"></button>
+        </div>
+    @endif
 
-    <h1 class="h3 mb-4">Vytvorenie nového produktu</h1>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="{{ route('admin.products.index') }}" class="text-decoration-none text-muted">Produkty</a></li>
+                <li class="breadcrumb-item active text-muted" aria-current="page">Úprava: {{ $product->name }}</li>
+            </ol>
+        </nav>
+    </div>
 
-    <!-- Formulár pre pridanie produktu -->
-    <section class="bg-light p-4 rounded shadow-sm border" aria-label="Formulár pre pridanie produktu">
+    <!-- FORMULÁR NA ÚPRAVU PRODUKTU -->
+    <form action="{{ route('admin.products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
 
-        <form action="#" method="POST" enctype="multipart/form-data" class="row g-4">
+        <section class="row g-4 align-items-stretch" aria-label="Detail produktu">
 
-            <!-- NÁZOV -->
-            <div class="col-md-8">
-                <label for="product-name" class="form-label fw-medium text-dark">Názov produktu *</label>
-                <input type="text" id="product-name" name="product_name" class="form-control" placeholder="Napr. Kytica bielych karafiátov" required>
-            </div>
+            <!-- Ľavý stĺpec: Obrázky -->
+            <div class="col-lg-5">
+                <div class="bg-light p-4 rounded h-100 d-flex flex-column align-items-center justify-content-center shadow-sm border">
 
-            <!-- CENA -->
-            <div class="col-md-4">
-                <label for="product-price" class="form-label fw-medium text-dark">Cena (€) *</label>
-                <input type="number" id="product-price" name="product_price" class="form-control" step="0.01" min="0" placeholder="0.00" required>
-            </div>
+                    <figure class="w-100 mb-4 text-center">
+                        <div class="bg-white border border-secondary overflow-hidden d-flex align-items-center justify-content-center shadow-sm mx-auto mb-3"
+                             style="max-width: 25rem; aspect-ratio: 1/1;">
+                            <img src="{{ asset($product->images->first()?->path ?? 'img/placeholder.svg') }}"
+                                 alt="Fotografia produktu - {{ $product->name }}"
+                                 class="w-100 h-100 object-fit-cover">
+                        </div>
 
-            <!-- ČÍSELNÍK: Kategória -->
-            <div class="col-md-6">
-                <label for="product-category" class="form-label fw-medium text-dark">Kategória *</label>
-                <select id="product-category" name="product_category" class="form-select" required>
-                    <option value="" selected disabled>Vyberte kategóriu...</option>
-                    <option value="kytice">Kytice</option>
-                    <option value="kvetinace">Kvety v kvetináči</option>
-                    <option value="boxy">Kvetinové boxy</option>
-                </select>
-            </div>
+                        <!-- Názov -->
+                        <div class="w-100 px-3">
+                            <label class="form-label small text-muted fw-bold">Názov produktu</label>
+                            <input type="text" name="name" value="{{ $product->name }}" class="form-control editable-input text-center fs-5 fw-medium" required>
+                        </div>
+                    </figure>
 
-            <!-- ČÍSELNÍK 2: Farba -->
-            <div class="col-md-6">
-                <label for="product-color" class="form-label fw-medium text-dark">Hlavná farba *</label>
-                <select id="product-color" name="product_color" class="form-select" required>
-                    <option value="" selected disabled>Vyberte farbu...</option>
-                    <option value="cervena">Červená</option>
-                    <option value="biela">Biela</option>
-                    <option value="zlta">Žltá</option>
-                    <option value="mix">Mix farieb</option>
-                </select>
-            </div>
+                                        <div class="w-100 border-top pt-3 text-center">
+                                            <label class="form-label small text-muted fw-bold mb-2">Nahradiť fotografie (Kliknite na políčka)</label>
+                                            <div class="form-text small mb-3">Kliknite na obrázok, ktorý chcete nahradiť. Ostatné ostanú zachované.</div>
 
-            <!-- KRÁTKY POPIS (Zobrazuje sa hore vedľa obrázka) -->
-            <div class="col-12">
-                <label for="product-short-desc" class="form-label fw-medium text-dark">Krátky popis *</label>
-                <textarea id="product-short-desc" name="product_short_desc" class="form-control" rows="2" placeholder="Stručný pútavý text (zobrazí sa vedľa hlavnej fotografie)..." required></textarea>
-                <div class="form-text mt-1 text-muted">Odporúčaná dĺžka je 1-2 vety.</div>
-            </div>
+                                            <div class="d-flex gap-3 justify-content-center flex-wrap">
 
-            <!-- DETAILNÝ OPIS (Zobrazuje sa dole v bloku) -->
-            <div class="col-12">
-                <label for="product-full-desc" class="form-label fw-medium text-dark">Detailný opis produktu *</label>
-                <textarea id="product-full-desc" name="product_full_desc" class="form-control" rows="6" placeholder="Kompletný popis vrátane pôvodu kvetov, spôsobu starostlivosti a tipov pre dlhú trvácnosť..." required></textarea>
-            </div>
+                                                @for($i = 0; $i < 4; $i++)
+                                                    @php
+                                                        $existingImage = $product->images->get($i);
+                                                    @endphp
 
-            <!-- FOTOGRAFIE (Atribút multiple) -->
-            <div class="col-12">
-                <label for="product-images" class="form-label fw-medium text-dark">Fotografie produktu *</label>
-                <input type="file" id="product-images" name="product_images[]" class="form-control" accept="image/*" multiple required>
-                <div class="form-text mt-2 text-muted">
-                    <i class="bi bi-info-circle me-1"></i> Pre splnenie požiadaviek nahrajte <strong>minimálne 2 fotografie</strong> produktu. Prvý obrázok bude použitý ako hlavný.
+                                                    <div class="image-upload-wrapper" title="Kliknite pre nahratie obrázka {{ $i + 1 }}">
+                                                        @if($existingImage)
+                                                            <img src="{{ asset($existingImage->path) }}" alt="Náhľad">
+
+                                                            <input type="hidden" name="existing_images[{{ $i }}]" value="{{ $existingImage->id }}">
+                                                        @endif
+
+
+                                                        <input type="file" name="image_{{ $i }}" accept="image/*">
+
+                                                        <i class="bi bi-cloud-arrow-up fs-3 upload-icon"></i>
+                                                    </div>
+                                                @endfor
+
+                                            </div>
+                                        </div>
+
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- ODOSLANIE FORMULÁRA -->
-            <div class="col-12 mt-5">
-                <hr class="border-secondary mb-4">
-                <div class="d-flex justify-content-end gap-3">
-                    <button type="reset" class="btn btn-outline-secondary px-4 py-2 small shadow-sm">Vymazať zmeny</button>
-                    <button type="submit" class="btn-continue bg-secondary bg-opacity-25 border-0 px-5 py-2 rounded shadow-sm text-dark fw-bold text-uppercase">
-                        Vytvoriť produkt
-                    </button>
+            <!-- Pravý stĺpec: Editovateľné dáta -->
+            <div class="col-lg-7 d-flex flex-column">
+
+                <!-- Horná lišta: Cena a Množstvo -->
+                <div class="d-flex align-items-end justify-content-between flex-wrap gap-3 mb-4 p-3 bg-light rounded shadow-sm border">
+                    <div class="flex-grow-1" style="max-width: 150px;">
+                        <label class="form-label small text-muted fw-bold mb-1">Cena (€)</label>
+                        <div class="input-group">
+                            <input type="number" name="price" value="{{ $product->price }}" step="0.01" min="0" class="form-control editable-input fs-5 fw-bold" required>
+                            <span class="input-group-text bg-white border-dashed border-start-0">€</span>
+                        </div>
+                    </div>
+
+                    <div class="flex-grow-1" style="max-width: 150px;">
+                        <label class="form-label small text-muted fw-bold mb-1">Na sklade (ks)</label>
+                        <input type="number" name="quantity_available" value="{{ $product->quantity_available }}" min="0" class="form-control editable-input fs-5" required>
+                    </div>
+
+                    <div class="flex-grow-1 d-flex gap-2">
+                        <div class="w-50">
+                            <label class="form-label small text-muted fw-bold mb-1">Kategória</label>
+                            <select name="category_id" class="form-select editable-input" required>
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->id }}" {{ $category->id == $product->category_id ? 'selected' : '' }}>
+                                        {{ $category->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="w-50">
+                            <label class="form-label small text-muted fw-bold mb-1">Farba</label>
+                            <select name="color_id" class="form-select editable-input" required>
+                                @foreach($colors as $color)
+                                    <option value="{{ $color->id }}" {{ $color->id == $product->color_id ? 'selected' : '' }}>
+                                        {{ $color->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Krátky popis -->
+                <div class="bg-light p-4 rounded flex-grow-1 d-flex flex-column shadow-sm border mb-4">
+                    <label class="form-label small text-muted fw-bold">Krátky popis</label>
+                    <textarea name="short_description" class="form-control editable-input editable-textarea flex-grow-1 fs-5 fw-light" rows="3" required>{{ $product->short_description }}</textarea>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Detailný popis -->
+        <section class="row mt-4" aria-label="Detailný popis produktu">
+            <div class="col-12">
+                <div class="bg-light p-4 p-md-5 rounded shadow-sm border">
+                    <label class="h5 fw-semibold mb-3 d-block text-dark">Detailný popis</label>
+                    <textarea name="full_description" class="form-control editable-input editable-textarea fs-5 fw-light" rows="6" required>{{ $product->full_description }}</textarea>
                 </div>
             </div>
+        </section>
 
-        </form>
-    </section>
+        <!-- Odosielacie tlačidlá -->
+        <div class="d-flex justify-content-end gap-3 mt-5 pb-5">
+            <a href="{{ route('admin.products.index') }}" class="btn btn-outline-secondary px-4 py-2 shadow-sm">Zrušiť úpravy</a>
+            <button type="submit" class="btn btn-success px-5 py-2 shadow-sm fw-bold">
+                <i class="bi bi-save me-2"></i> Uložiť zmeny
+            </button>
+        </div>
 
+    </form>
 </main>
 
-	<!-- FOOTER -->
+    <!-- FOOTER -->
     <footer class="bg-white py-4 border-top mt-auto">
         <div class="container">
             <div class="text-center small text-muted">
@@ -173,6 +280,9 @@
             </div>
         </div>
     </footer>
+
+    <!-- Bootstrap 5.3 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
