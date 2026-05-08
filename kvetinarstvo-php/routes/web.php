@@ -7,6 +7,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\WishlistController;
 
 Route::get('/', [PageController::class, 'home']);
 Route::get('/about', function () { return view('about'); });
@@ -32,7 +33,12 @@ Route::get('/category/{slug}', [ProductController::class, 'category'])->name('ca
 
 
 // Wishlist
-Route::get('/wishlist', function () { return view('wishlist'); });
+Route::middleware('auth')->group(function () {
+    Route::get('/wishlist',         [WishlistController::class, 'index'])->name('wishlist.index');
+    Route::post('/wishlist/add',    [WishlistController::class, 'add'])->name('wishlist.add');
+    Route::post('/wishlist/remove', [WishlistController::class, 'remove'])->name('wishlist.remove');
+    Route::post('/wishlist/to-cart', [WishlistController::class, 'moveToCart'])->name('wishlist.moveToCart');
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');

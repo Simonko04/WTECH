@@ -204,9 +204,13 @@
                     </form>
 
                     <!-- Pridať do wishlistu -->
-                    <a href="#" class="text-dark interaction-icon" aria-label="Pridať do obľúbených" role="button">
-                        <i class="bi bi-heart fs-3"></i>
-                    </a>
+                    <form method="POST" action="{{ route('wishlist.add') }}" class="d-inline">
+                        @csrf
+                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                        <button type="submit" class="btn btn-outline-danger">
+                            <i class="bi bi-heart"></i>
+                        </button>
+                    </form>
                 </div>
             </div>
 
