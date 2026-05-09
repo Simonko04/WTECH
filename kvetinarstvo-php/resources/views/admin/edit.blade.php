@@ -71,7 +71,11 @@
             z-index: 2;
             background: rgba(255, 255, 255, 0.7);
             border-radius: 50%;
-            padding: 4px;
+            width: 3rem;
+            height: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .image-upload-wrapper:hover .upload-icon {
@@ -283,6 +287,16 @@
 
     <!-- Bootstrap 5.3 JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
+    <script>
+    document.querySelectorAll('.image-upload-wrapper input[type="file"]').forEach(function(input) {
+        input.addEventListener('change', function() {
+            if (this.files && this.files[0]) {
+                var wrapper = this.closest('.image-upload-wrapper');
+                var img = wrapper.querySelector('img');
+                img.src = URL.createObjectURL(this.files[0]);
+            }
+        });
+    });
+    </script>
 </body>
 </html>

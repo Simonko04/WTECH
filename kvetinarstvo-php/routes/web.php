@@ -62,6 +62,7 @@ Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->prefix
     Route::get('/products/{product}/edit', [\App\Http\Controllers\AdminProductController::class, 'edit'])->name('products.edit');
     Route::post('/products/store', [\App\Http\Controllers\AdminProductController::class, 'store'])->name('products.store');
     Route::put('/products/{product}/update', [\App\Http\Controllers\AdminProductController::class, 'update'])->name('products.update');
+    Route::delete('/products/{product}', [\App\Http\Controllers\AdminProductController::class, 'destroy'])->name('products.destroy');
 });
 
 require __DIR__.'/auth.php';

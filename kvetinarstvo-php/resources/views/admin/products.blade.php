@@ -254,9 +254,13 @@
                                         <a href="{{ route('admin.products.edit', $product) }}" class="btn btn-primary action-btn flex-fill">
                                             <i class="bi bi-pencil"></i> Upraviť
                                         </a>
-                                        <button class="btn btn-outline-danger action-btn flex-fill">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
+                                        <form method="POST" action="{{ route('admin.products.destroy', $product) }}" class="flex-fill" onsubmit="return confirm('Naozaj chcete vymazať tento produkt?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-outline-danger action-btn w-100">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>

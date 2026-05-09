@@ -214,4 +214,19 @@ class AdminProductController extends Controller
 
             return redirect()->route('admin.products.index')->with('success', 'Produkt bol úspešne upravený!');
         }
+
+    public function destroy(Product $product)
+    {
+        foreach ($product->images as $image) {
+            $filePath = public_path($image->path);
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            }
+            $image->delete();
+        }
+
+        $product->delete();
+
+        return redirect()->route('admin.products.index')->with('success', 'Produkt bol vymazaný.');
+    }
 }
