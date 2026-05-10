@@ -80,10 +80,7 @@
                         <input type="password" name="password" class="form-control form-control-lg"
                                placeholder="Heslo" required>
                     </div>
-                    <div class="mb-3 form-check">
-                        <input type="checkbox" name="remember" class="form-check-input" id="remember">
-                        <label class="form-check-label text-muted" for="remember">Zapamätať si ma</label>
-                    </div>
+
 
                     @if ($errors->any())
                         <div class="alert alert-danger py-2 mb-3">
@@ -97,9 +94,7 @@
                         Prihlásiť sa
                     </button>
 
-                    <div class="text-center small">
-                        <a href="#" class="text-muted">Zabudnuté heslo?</a>
-                    </div>
+
 
                     <div class="text-center mt-4 pt-3 border-top">
                         Nemáš účet?
